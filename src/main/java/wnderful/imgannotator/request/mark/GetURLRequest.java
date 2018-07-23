@@ -1,19 +1,25 @@
 package wnderful.imgannotator.request.mark;
 
 public class GetURLRequest {
-    private String taskName;
+    private String username;
+    private String taskname;
     private String imgID;
-
-    public GetURLRequest(String taskName, String imgID) {
-        this.taskName = taskName;
-        this.imgID = imgID;
-    }
 
     public GetURLRequest() {
     }
 
-    public String getTaskName() {
-        return taskName;
+    public GetURLRequest(String username, String taskname, String imgID) {
+        this.username = username;
+        this.taskname = taskname;
+        this.imgID = imgID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getTaskname() {
+        return taskname;
     }
 
     public String getImgID() {

@@ -1,13 +1,14 @@
 package wnderful.imgannotator.request.task;
 
-public class DeleteTaskRequest {
+public class AbandonTaskRequest {
+
     private String username;
     private String taskname;
 
-    public DeleteTaskRequest() {
+    public AbandonTaskRequest() {
     }
 
-    public DeleteTaskRequest(String username, String taskname) {
+    public AbandonTaskRequest(String username, String taskname) {
         this.username = username;
         this.taskname = taskname;
     }

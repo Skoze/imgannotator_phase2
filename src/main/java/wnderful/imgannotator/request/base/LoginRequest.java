@@ -1,14 +1,15 @@
-package wnderful.imgannotator.request.user;
+package wnderful.imgannotator.request.base;
 
-public class SignUpRequest {
+public class LoginRequest {
     private String username;
     private String password;
-    private String email;
 
-    public SignUpRequest(String username, String password, String email) {
+    public LoginRequest() {
+    }
+
+    public LoginRequest(String username, String password) {
         this.username = username;
         this.password = password;
-        this.email = email;
     }
 
     public String getUsername() {
@@ -17,9 +18,5 @@ public class SignUpRequest {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getEmail() {
-        return email;
     }
 }

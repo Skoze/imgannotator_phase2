@@ -1,23 +1,29 @@
 package wnderful.imgannotator.request.mark;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.alibaba.fastjson.*;
 
 public class ImgMarkRequest {
-    private String  taskName;
+    private String  username;
+    private String  taskname;
     private String  imgID;
     private JSONPObject marks;
 
     public ImgMarkRequest() {
     }
 
-    public ImgMarkRequest(String taskName, String imgID, JSONPObject marks) {
-        this.taskName = taskName;
+    public ImgMarkRequest(String username, String taskname, String imgID, JSONPObject marks) {
+        this.username = username;
+        this.taskname = taskname;
         this.imgID = imgID;
         this.marks = marks;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getUsername() {
+        return username;
+    }
+
+    public String getTaskname() {
+        return taskname;
     }
 
     public String getImgID() {

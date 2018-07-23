@@ -4,27 +4,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import wnderful.imgannotator.request.user.LoginRequest;
-import wnderful.imgannotator.request.user.SignUpRequest;
+import wnderful.imgannotator.request.user.GetUserMessageRequest;
 import wnderful.imgannotator.request.user.UpdateUserRequest;
 import wnderful.imgannotator.publicData.Response;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/service/user")
 public class UserController {
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Response login(@RequestBody LoginRequest request) {
-        return new Response();
-    }
-
-    @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    public Response signUp(@RequestBody SignUpRequest requestt) {
-        return new Response();
-    }
-
-    @RequestMapping(value = "/getUserMessage", method = RequestMethod.GET)
-    public Response getUserMessage() {
+    @RequestMapping(value = "/getUserMessage", method = RequestMethod.POST)
+    public Response getUserMessage(@RequestBody GetUserMessageRequest request) {
         return new Response();
     }
 

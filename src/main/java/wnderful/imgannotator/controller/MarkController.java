@@ -9,7 +9,7 @@ import wnderful.imgannotator.request.mark.GetURLRequest;
 import wnderful.imgannotator.request.mark.ImgMarkRequest;
 
 @RestController
-@RequestMapping(value = "/mark")
+@RequestMapping(value = "/service/mark")
 public class MarkController {
 
     @RequestMapping(value = "/setMark", method = RequestMethod.POST)

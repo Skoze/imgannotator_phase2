@@ -1,6 +1,6 @@
-package wnderful.imgannotator.publicData.requestCode;
+package wnderful.imgannotator.publicData.reponseCode;
 
-public enum LoginReqCode {
+public enum LoginRepCode {
 
     SUCCESS(0,"登陆成功"),
     FAIL(1,"登录失败");
@@ -8,7 +8,7 @@ public enum LoginReqCode {
     private int code;
     private String message;
 
-    LoginReqCode(int code, String message) {
+    LoginRepCode(int code, String message) {
         this.code = code;
         this.message = message;
     }
