@@ -1,24 +1,25 @@
 package wnderful.imgannotator.controller;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import wnderful.imgannotator.request.user.GetUserMessageRequest;
+import org.springframework.web.bind.annotation.*;
+import wnderful.imgannotator.blserviceImpl.UserServiceImpl;
 import wnderful.imgannotator.request.user.UpdateUserRequest;
-import wnderful.imgannotator.publicData.Response;
+import wnderful.imgannotator.publicData.response.Response;
 
 @RestController
 @RequestMapping(value = "/service/user")
 public class UserController {
 
-    @RequestMapping(value = "/getUserMessage", method = RequestMethod.POST)
-    public Response getUserMessage(@RequestBody GetUserMessageRequest request) {
-        return new Response();
+    final UserServiceImpl userService = new UserServiceImpl();
+
+    @RequestMapping(value = "/getUserMessage/{username}", method = RequestMethod.GET)
+    public Response getUserMessage(@PathVariable("username") String username) {
+        Response response = userService.getUserMessage(username);
+        return response;
     }
 
-    @RequestMapping(value = "/updateUserMessage", method = RequestMethod.POST)
-    public Response updateUserMessage(@RequestBody UpdateUserRequest requst) {
-        return new Response();
+    @RequestMapping(value = "/updateUserMessage/{username}", method = RequestMethod.POST)
+    public Response updateUserMessage(@PathVariable("username") String username,@RequestBody UpdateUserRequest requst) {
+        Response response = userService.updateUserMessage(username,requst.getNewUsername(),requst.getNewEmail(),requst.getOldPassword(),requst.getNewPassword());
+        return response;
     }
 }

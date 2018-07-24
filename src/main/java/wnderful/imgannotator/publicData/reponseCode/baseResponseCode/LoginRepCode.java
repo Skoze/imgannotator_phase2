@@ -1,4 +1,4 @@
-package wnderful.imgannotator.publicData.reponseCode;
+package wnderful.imgannotator.publicData.reponseCode.baseResponseCode;
 
 public enum LoginRepCode {
 

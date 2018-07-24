@@ -1,10 +1,8 @@
 package wnderful.imgannotator.controller;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import wnderful.imgannotator.publicData.Response;
+import org.springframework.web.bind.annotation.*;
+import wnderful.imgannotator.blserviceImpl.MarkServiceImpl;
+import wnderful.imgannotator.publicData.response.Response;
 import wnderful.imgannotator.request.mark.GetURLRequest;
 import wnderful.imgannotator.request.mark.ImgMarkRequest;
 
@@ -12,13 +10,17 @@ import wnderful.imgannotator.request.mark.ImgMarkRequest;
 @RequestMapping(value = "/service/mark")
 public class MarkController {
 
-    @RequestMapping(value = "/setMark", method = RequestMethod.POST)
-    public Response setMark(@RequestBody ImgMarkRequest request) {
-        return new Response();
+    final MarkServiceImpl markService = new MarkServiceImpl();
+
+    @RequestMapping(value = "/setMark/{username}", method = RequestMethod.POST)
+    public Response setMark(@PathVariable("username") String username, @RequestBody ImgMarkRequest request) {
+        Response response = markService.setMark(username,request.getTaskname(),request.getImgID(),request.getMarks());
+        return response;
     }
 
-    @RequestMapping(value = "/findURL", method = RequestMethod.POST)
-    public Response findURL(@RequestBody GetURLRequest request) {
-        return new Response();
+    @RequestMapping(value = "/findURL/{username}", method = RequestMethod.POST)
+    public Response findURL(@PathVariable("username") String username,@RequestBody GetURLRequest request) {
+        Response response = markService.findURL(username,request.getTaskname(),request.getImgID());
+        return response;
     }
 }
