@@ -1,13 +1,13 @@
 package wnderful.imgannotator.dataService;
 
-import wnderful.imgannotator.entity.User;
+import wnderful.imgannotator.dao.data.UserData;
 
 import java.util.Map;
 
 public interface UserDataService {
-    boolean saveUser(User user);
+    boolean saveUser(UserData userData);
 
-    User findUser(String username);
+    UserData findUser(String username);
 
     Map getAllUser();
 }

@@ -1,4 +1,4 @@
 package wnderful.imgannotator.dataService;
 
-public interface MarkDataService {
+public interface ImgDataService {
 }

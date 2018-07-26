@@ -8,45 +8,40 @@ import wnderful.imgannotator.vo.taskVo.*;
 public class TaskServiceImpl implements TaskService {
 
     @Override
-    public ReleaseTaskRep releaseTask(String username, String taskname, String taskDescription, String images,int numberOfImages, int taskTime, String[] taskTag, int credits, int maxWorkers) {
-        ReleaseTaskVo vo = new ReleaseTaskVo();
-        return new ReleaseTaskRep(ReleaseTaskRepCode.SUCCESS, vo);
+    public ReleaseTaskRep releaseTask(String username, String taskname, String taskDescription, String[] images,int numberOfImages, int taskTime, String[] taskTag, int credits, int maxWorkers) {
+        return new ReleaseTaskRep(ReleaseTaskRepCode.SUCCESS);
     }
 
     @Override
     public DisplayReleasedTaskRep displayReleasedTask(String username) {
-        DisplayReleasedTaskVo vo = new DisplayReleasedTaskVo();
+        DisplayTaskVo vo = new DisplayTaskVo();
         return new DisplayReleasedTaskRep(DisplayReleasedTaskRepCode.SUCCESS, vo);
     }
 
     @Override
     public ModifyTaskRep modifyTask(String username, String taskname, String taskDescription, int remainTime, String[] taskTag, int maxWorkers) {
-        ModifyTaskVo vo = new ModifyTaskVo();
-        return new ModifyTaskRep(ModifyTaskRepCode.SUCCESS, vo);
+        return new ModifyTaskRep(ModifyTaskRepCode.SUCCESS);
     }
 
     @Override
     public DeleteTaskRep deleteTask(String username, String taskName) {
-        DeleteTaskVo vo = new DeleteTaskVo();
-        return new DeleteTaskRep(DeleteTaskRepCode.SUCCESS, vo);
+        return new DeleteTaskRep(DeleteTaskRepCode.SUCCESS);
     }
 
     @Override
     public DisplayReceiptTaskRep displayReceiptTask(String username) {
-        DisplayReceiptTaskVo vo = new DisplayReceiptTaskVo();
+        DisplayTaskVo vo = new DisplayTaskVo();
         return new DisplayReceiptTaskRep(DisplayReceiptTaskRepCode.SUCCESS, vo);
     }
 
     @Override
     public ReceiptTaskRep receiptTask(String username, String taskName) {
-        ReceiptTaskVo vo = new ReceiptTaskVo();
-        return new ReceiptTaskRep(ReceiptTaskRepCode.SUCCESS, vo);
+        return new ReceiptTaskRep(ReceiptTaskRepCode.SUCCESS);
     }
 
 
     @Override
     public AbandonTaskRep abandonTask(String username, String taskName) {
-        AbandonTaskVo vo = new AbandonTaskVo();
-        return new AbandonTaskRep(AbandonTaskRepCode.SUCCESS, vo);
+        return new AbandonTaskRep(AbandonTaskRepCode.SUCCESS);
     }
 }

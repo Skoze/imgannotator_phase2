@@ -3,7 +3,7 @@ package wnderful.imgannotator.request.task;
 public class ReleaseTaskRequest {
     private String taskname;
     private String taskDescription;
-    private String images;
+    private String[] images;
     private int numberOfImages;
     private int taskTime;
     private String[] taskTag;
@@ -13,7 +13,7 @@ public class ReleaseTaskRequest {
     public ReleaseTaskRequest() {
     }
 
-    public ReleaseTaskRequest(String taskname, String taskDescription, String images, int numberOfImages, int taskTime, String[] taskTag, int credits, int maxWorkers) {
+    public ReleaseTaskRequest(String taskname, String taskDescription, String[] images, int numberOfImages, int taskTime, String[] taskTag, int credits, int maxWorkers) {
         this.taskname = taskname;
         this.taskDescription = taskDescription;
         this.images = images;
@@ -32,7 +32,7 @@ public class ReleaseTaskRequest {
         return taskDescription;
     }
 
-    public String getImages() {
+    public String[] getImages() {
         return images;
     }
 

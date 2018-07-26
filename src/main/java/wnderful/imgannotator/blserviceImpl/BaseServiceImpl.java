@@ -2,7 +2,7 @@ package wnderful.imgannotator.blserviceImpl;
 
 import wnderful.imgannotator.blservice.BaseService;
 import wnderful.imgannotator.dataServiceImpl.UserDataServiceImpl;
-import wnderful.imgannotator.entity.User;
+import wnderful.imgannotator.dao.data.UserData;
 import wnderful.imgannotator.publicData.reponseCode.baseResponseCode.DisplayAllTaskRepCode;
 import wnderful.imgannotator.publicData.reponseCode.baseResponseCode.DisplayDetailRepCode;
 import wnderful.imgannotator.publicData.reponseCode.baseResponseCode.LoginRepCode;
@@ -11,10 +11,10 @@ import wnderful.imgannotator.publicData.response.baseResponse.DisplayAllTaskRep;
 import wnderful.imgannotator.publicData.response.baseResponse.DisplayDetailRep;
 import wnderful.imgannotator.publicData.response.baseResponse.LoginRep;
 import wnderful.imgannotator.publicData.response.baseResponse.SignUpRep;
-import wnderful.imgannotator.vo.baseVo.DisplayAllTaskVo;
 import wnderful.imgannotator.vo.baseVo.DisplayDetailVo;
 import wnderful.imgannotator.vo.baseVo.LoginVo;
 import wnderful.imgannotator.util.jwt.*;
+import wnderful.imgannotator.vo.taskVo.DisplayTaskVo;
 
 public class BaseServiceImpl implements BaseService {
     UserDataServiceImpl userDataService = new UserDataServiceImpl();
@@ -22,13 +22,13 @@ public class BaseServiceImpl implements BaseService {
 
     @Override
     public LoginRep login(String username, String password) {
-        User user= userDataService.findUser(username);
+        UserData userData = userDataService.findUser(username);
 
         //判断用户是否存在
-        if(user == null){
+        if(userData == null){
             return new LoginRep(LoginRepCode.NOTEXIST);
         }else{
-            if(user.getPassword().equals(password)){
+            if(userData.getPassword().equals(password)){
                 LoginVo vo = new LoginVo();
                 try{
                     vo.setToken(jwtHelper.createToken(username));
@@ -50,8 +50,8 @@ public class BaseServiceImpl implements BaseService {
         if(userDataService.findUser(username)!=null){
             return new SignUpRep(SignUpRepCode.NAMEREPEAT);
         }else{
-            User user = new User(username,password,email,role);
-            if(userDataService.saveUser(user)){
+            UserData userData = new UserData(username,password,email,role);
+            if(userDataService.saveUser(userData)){
                 return new SignUpRep(SignUpRepCode.SUCCESS);
             }else{
                 return new SignUpRep(SignUpRepCode.FAIL);
@@ -67,7 +67,7 @@ public class BaseServiceImpl implements BaseService {
 
     @Override
     public DisplayAllTaskRep displayAllTask() {
-        DisplayAllTaskVo vo = new DisplayAllTaskVo();
+        DisplayTaskVo vo = new DisplayTaskVo();
         return new DisplayAllTaskRep(DisplayAllTaskRepCode.SUCCESS, vo);
     }
 }

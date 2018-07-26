@@ -2,19 +2,19 @@ package wnderful.imgannotator.publicData.response.taskResponse;
 
 import wnderful.imgannotator.publicData.reponseCode.taskResponseCode.DisplayReceiptTaskRepCode;
 import wnderful.imgannotator.publicData.response.Response;
-import wnderful.imgannotator.vo.taskVo.DisplayReceiptTaskVo;
+import wnderful.imgannotator.vo.taskVo.DisplayTaskVo;
 
 public class DisplayReceiptTaskRep extends Response {
     private int code;
     private String message;
-    private DisplayReceiptTaskVo data;
+    private DisplayTaskVo data;
 
     public DisplayReceiptTaskRep(DisplayReceiptTaskRepCode repCode) {
         this.code = repCode.getCode();
         this.message = repCode.getMessage();
     }
 
-    public DisplayReceiptTaskRep(DisplayReceiptTaskRepCode repCode,DisplayReceiptTaskVo data) {
+    public DisplayReceiptTaskRep(DisplayReceiptTaskRepCode repCode,DisplayTaskVo data) {
         this.code = repCode.getCode();
         this.message = repCode.getMessage();
         this.data = data;
@@ -30,7 +30,7 @@ public class DisplayReceiptTaskRep extends Response {
         return message;
     }
 
-    public DisplayReceiptTaskVo getVo() {
+    public DisplayTaskVo getVo() {
         return data;
     }
 }

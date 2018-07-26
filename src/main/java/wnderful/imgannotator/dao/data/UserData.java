@@ -1,19 +1,29 @@
-package wnderful.imgannotator.entity;
+package wnderful.imgannotator.dao.data;
 
-public class User {
+public class UserData {
     private String username;
     private String password;
     private String email;
     private String role;
+    private int points;
 
-    public User() {
+    public UserData() {
     }
 
-    public User(String username, String password, String email, String role) {
+    public UserData(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+        this.points = 0;
+    }
+
+    public UserData(String username, String password, String email, String role, int points) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.points = points;
     }
 
     public String getUsername() {
@@ -32,6 +42,9 @@ public class User {
         return role;
     }
 
+    public int getPoints() {
+        return points;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -49,4 +62,7 @@ public class User {
         this.role = role;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
 }

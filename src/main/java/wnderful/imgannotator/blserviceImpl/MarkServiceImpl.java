@@ -19,7 +19,7 @@ public class MarkServiceImpl implements MarkService {
     }
 
     @Override
-    public Response findURL(String username, String taskname, String imgID) {
+    public Response findURL(String username, String taskname) {
         ImgUrlVo vo = new ImgUrlVo();
         return new FindURLRep(FindURLRepCode.SUCCESS, vo);
     }

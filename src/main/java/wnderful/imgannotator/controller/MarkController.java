@@ -21,7 +21,7 @@ public class MarkController {
 
     @RequestMapping(value = "/findURL/{username}", method = RequestMethod.POST)
     public Response findURL(@PathVariable("username") String username,@RequestBody GetURLRequest request) {
-        Response response = markService.findURL(username,request.getTaskname(),request.getImgID());
+        Response response = markService.findURL(username,request.getTaskname());
         return response;
     }
 

@@ -1,9 +1,24 @@
 package wnderful.imgannotator.vo.MarkVo;
 
-public class MarkVo {
-    private int number  = 0;
+import com.alibaba.fastjson.JSONObject;
 
-    public int getNumber() {
-        return number;
+public class MarkVo {
+    private JSONObject[] allMarks;
+
+    public MarkVo() {
+        allMarks = new JSONObject[1];
+        allMarks[0] = new JSONObject();
+    }
+
+    public MarkVo(JSONObject[] allMarks) {
+        this.allMarks = allMarks;
+    }
+
+    public JSONObject[] getAllMarks() {
+        return allMarks;
+    }
+
+    public void setAllMarks(JSONObject[] allMarks) {
+        this.allMarks = allMarks;
     }
 }
