@@ -4,6 +4,7 @@ public class ReleaseTaskRequest {
     private String taskname;
     private String taskDescription;
     private String images;
+    private int numberOfImages;
     private int taskTime;
     private String[] taskTag;
     private int credits;
@@ -12,16 +13,16 @@ public class ReleaseTaskRequest {
     public ReleaseTaskRequest() {
     }
 
-    public ReleaseTaskRequest(String taskname, String taskDescription, String images, int taskTime, String[] taskTag, int credits, int maxWorkers) {
+    public ReleaseTaskRequest(String taskname, String taskDescription, String images, int numberOfImages, int taskTime, String[] taskTag, int credits, int maxWorkers) {
         this.taskname = taskname;
         this.taskDescription = taskDescription;
         this.images = images;
+        this.numberOfImages = numberOfImages;
         this.taskTime = taskTime;
         this.taskTag = taskTag;
         this.credits = credits;
         this.maxWorkers = maxWorkers;
     }
-
 
     public String getTaskname() {
         return taskname;
@@ -47,5 +48,9 @@ public class ReleaseTaskRequest {
 
     public int getMaxWorkers() {
         return maxWorkers;
+    }
+
+    public int getNumberOfImages() {
+        return numberOfImages;
     }
 }

@@ -14,7 +14,7 @@ public class TaskController {
     @RequestMapping(value = "/requester/add/{username}", method = RequestMethod.POST)
     public Response releaseTask(@PathVariable("username") String username, @RequestBody ReleaseTaskRequest request) {
         Response response = taskService.releaseTask(username, request.getTaskname(), request.getTaskDescription(),
-                request.getImages(), request.getTaskTime(), request.getTaskTag(), request.getCredits(), request.getMaxWorkers());
+                request.getImages(),request.getNumberOfImages(), request.getTaskTime(), request.getTaskTag(), request.getCredits(), request.getMaxWorkers());
         return response;
     }
 

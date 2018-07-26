@@ -4,14 +4,16 @@ public class SignUpRequest {
     private String username;
     private String password;
     private String email;
+    private String role;
 
     public SignUpRequest() {
     }
 
-    public SignUpRequest(String username, String password, String email) {
+    public SignUpRequest(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     public String getUsername() {
@@ -24,5 +26,9 @@ public class SignUpRequest {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

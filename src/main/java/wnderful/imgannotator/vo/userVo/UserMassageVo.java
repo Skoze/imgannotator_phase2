@@ -3,15 +3,17 @@ package wnderful.imgannotator.vo.userVo;
 public class UserMassageVo {
     private String username;
     private String email;
-    private int point;
+    private int points;
+    private String role;
 
     public UserMassageVo() {
     }
 
-    public UserMassageVo(String username, String email, int point) {
+    public UserMassageVo(String username, String email, int points, String role) {
         this.username = username;
         this.email = email;
-        this.point = point;
+        this.points = points;
+        this.role = role;
     }
 
     public void setUsername(String username) {
@@ -22,8 +24,12 @@ public class UserMassageVo {
         this.email = email;
     }
 
-    public void setPoint(int point) {
-        this.point = point;
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getUsername() {
@@ -34,7 +40,11 @@ public class UserMassageVo {
         return email;
     }
 
-    public int getPoint() {
-        return point;
+    public int getPoints() {
+        return points;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

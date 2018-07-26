@@ -7,4 +7,6 @@ public interface MarkService {
     Response setMark(String username, String taskname, String imgID, JSONPObject marks);
 
     Response findURL(String username, String taskname, String imgID);
+
+    Response findMark(String taskname,String imgID);
 }

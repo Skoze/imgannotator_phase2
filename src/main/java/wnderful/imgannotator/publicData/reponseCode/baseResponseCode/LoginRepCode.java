@@ -2,8 +2,10 @@ package wnderful.imgannotator.publicData.reponseCode.baseResponseCode;
 
 public enum LoginRepCode {
 
+    UNKNOW(-1,"未知错误"),
     SUCCESS(0,"登陆成功"),
-    FAIL(1,"登录失败");
+    FAIL(1,"登录失败"),
+    NOTEXIST(2,"用户不存在");
 
     private int code;
     private String message;

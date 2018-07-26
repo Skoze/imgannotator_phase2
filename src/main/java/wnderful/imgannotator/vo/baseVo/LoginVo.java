@@ -1,7 +1,9 @@
 package wnderful.imgannotator.vo.baseVo;
 
-public class LoginVo {
-    private String token;
+import java.io.Serializable;
+
+public class LoginVo implements Serializable {
+    private String token = "";
 
     public LoginVo() {
     }
