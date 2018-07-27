@@ -1,4 +1,4 @@
-package wnderful.imgannotator.entity;
+package wnderful.imgannotator.entity.user;
 
 public class User {
     private String username;

@@ -6,12 +6,13 @@ import wnderful.imgannotator.publicData.reponseCode.userResponseCode.UpdateUserM
 import wnderful.imgannotator.publicData.response.userResponse.GetUserMassageRep;
 import wnderful.imgannotator.publicData.response.userResponse.UpdateUserMessageRep;
 import wnderful.imgannotator.vo.userVo.UserMessageVo;
+import wnderful.imgannotator.vo.userVo.WorkerMessageVo;
 
 public class UserServiceImpl implements UserService {
 
     @Override
-    public GetUserMassageRep getUserMessage(String username) {
-        UserMessageVo vo = new UserMessageVo();
+    public GetUserMassageRep getUserMessage(String username,String role) {
+        WorkerMessageVo vo = new WorkerMessageVo();
         return new GetUserMassageRep(GetUserMassageRepCode.SUCCESS,vo);
     }
 

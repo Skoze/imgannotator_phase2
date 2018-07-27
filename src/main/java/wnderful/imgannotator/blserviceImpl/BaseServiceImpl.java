@@ -22,41 +22,12 @@ public class BaseServiceImpl implements BaseService {
 
     @Override
     public LoginRep login(String username, String password) {
-        UserData userData = userDataService.findUser(username);
-
-        //判断用户是否存在
-        if(userData == null){
-            return new LoginRep(LoginRepCode.NOTEXIST);
-        }else{
-            if(userData.getPassword().equals(password)){
-                LoginVo vo = new LoginVo();
-                try{
-                    vo.setToken(jwtHelper.createToken(username));
-                    return new LoginRep(LoginRepCode.SUCCESS, vo);
-                }catch (Exception ex){
-                    ex.printStackTrace();
-                    return new LoginRep(LoginRepCode.UNKNOW);
-                }
-            }else {
-                return new LoginRep(LoginRepCode.FAIL);
-            }
-        }
+        return new LoginRep(LoginRepCode.NOTEXIST);
     }
 
     @Override
     public SignUpRep signUp(String username, String password, String email, String role) {
-
-        //判断用户名是否重复
-        if(userDataService.findUser(username)!=null){
-            return new SignUpRep(SignUpRepCode.NAMEREPEAT);
-        }else{
-            UserData userData = new UserData(username,password,email,role);
-            if(userDataService.saveUser(userData)){
-                return new SignUpRep(SignUpRepCode.SUCCESS);
-            }else{
-                return new SignUpRep(SignUpRepCode.FAIL);
-            }
-        }
+        return new SignUpRep(SignUpRepCode.SUCCESS);
     }
 
     @Override

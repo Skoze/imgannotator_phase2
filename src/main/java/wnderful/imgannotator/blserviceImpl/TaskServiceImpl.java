@@ -8,7 +8,7 @@ import wnderful.imgannotator.vo.taskVo.*;
 public class TaskServiceImpl implements TaskService {
 
     @Override
-    public ReleaseTaskRep releaseTask(String username, String taskname, String taskDescription, String[] images,int numberOfImages, int taskTime, String[] taskTag, int credits, int maxWorkers) {
+    public ReleaseTaskRep releaseTask(String username, String taskname, String taskDescription,int numberOfImages, int taskTime, String[] taskTag, int credits, int maxWorkers) {
         return new ReleaseTaskRep(ReleaseTaskRepCode.SUCCESS);
     }
 

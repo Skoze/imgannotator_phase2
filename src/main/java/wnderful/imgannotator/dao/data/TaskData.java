@@ -4,31 +4,27 @@ public class TaskData {
     private String taskname;
     private String requestername;
     private String taskDescription;
-    private String[] images;
-    private int numberOfImages;
+    public String imgURL;
     private String releasedTime;
     private int taskTime;
     private String[] taskTag;
     private int credits;
     private int maxWorkers;
-    private int recentWorkers;
 
     public TaskData() {
     }
 
-    public TaskData(String taskname, String requestername, String taskDescription, String[] images, int numberOfImages, String releasedTime,
-                    int taskTime, String[] taskTag, int credits, int maxWorkers, int recentWorkers) {
+    public TaskData(String taskname, String requestername, String taskDescription, String imgURL,
+                    String releasedTime, int taskTime, String[] taskTag, int credits, int maxWorkers) {
         this.taskname = taskname;
         this.requestername = requestername;
         this.taskDescription = taskDescription;
-        this.images = images;
-        this.numberOfImages = numberOfImages;
+        this.imgURL = imgURL;
         this.releasedTime = releasedTime;
         this.taskTime = taskTime;
         this.taskTag = taskTag;
         this.credits = credits;
         this.maxWorkers = maxWorkers;
-        this.recentWorkers = recentWorkers;
     }
 
     public String getTaskname() {
@@ -43,12 +39,8 @@ public class TaskData {
         return taskDescription;
     }
 
-    public String[] getImages() {
-        return images;
-    }
-
-    public int getNumberOfImages() {
-        return numberOfImages;
+    public String getImgURL() {
+        return imgURL;
     }
 
     public String getReleasedTime() {
@@ -71,10 +63,6 @@ public class TaskData {
         return maxWorkers;
     }
 
-    public int getRecentWorkers() {
-        return recentWorkers;
-    }
-
     public void setTaskname(String taskname) {
         this.taskname = taskname;
     }
@@ -87,12 +75,8 @@ public class TaskData {
         this.taskDescription = taskDescription;
     }
 
-    public void setImages(String[] images) {
-        this.images = images;
-    }
-
-    public void setNumberOfImages(int numberOfImages) {
-        this.numberOfImages = numberOfImages;
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
     }
 
     public void setReleasedTime(String releasedTime) {
@@ -113,9 +97,5 @@ public class TaskData {
 
     public void setMaxWorkers(int maxWorkers) {
         this.maxWorkers = maxWorkers;
-    }
-
-    public void setRecentWorkers(int recentWorkers) {
-        this.recentWorkers = recentWorkers;
     }
 }

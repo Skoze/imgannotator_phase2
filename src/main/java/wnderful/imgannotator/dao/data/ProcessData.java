@@ -5,14 +5,17 @@ public class ProcessData {
     private String username;
     private String taskname;
     private int process;
+    private int imgsNum;
 
     public ProcessData() {
     }
 
-    public ProcessData(String processname, String username, String taskname) {
+    public ProcessData(String processname, String username, String taskname, int process, int imgsNum) {
         this.processname = processname;
         this.username = username;
         this.taskname = taskname;
+        this.process = process;
+        this.imgsNum = imgsNum;
     }
 
     public String getProcessname() {
@@ -31,6 +34,10 @@ public class ProcessData {
         return process;
     }
 
+    public int getImgsNum() {
+        return imgsNum;
+    }
+
     public void setProcessname(String processname) {
         this.processname = processname;
     }
@@ -45,5 +52,9 @@ public class ProcessData {
 
     public void setProcess(int process) {
         this.process = process;
+    }
+
+    public void setImgsNum(int imgsNum) {
+        this.imgsNum = imgsNum;
     }
 }

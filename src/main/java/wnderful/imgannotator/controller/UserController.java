@@ -11,9 +11,15 @@ public class UserController {
 
     final UserServiceImpl userService = new UserServiceImpl();
 
-    @RequestMapping(value = "/getUserMessage/{username}", method = RequestMethod.GET)
-    public Response getUserMessage(@PathVariable("username") String username) {
-        Response response = userService.getUserMessage(username);
+    @RequestMapping(value = "/worker/getUserMessage/{username}", method = RequestMethod.GET)
+    public Response getWorkerMessage(@PathVariable("username") String username) {
+        Response response = userService.getUserMessage(username,"worker");
+        return response;
+    }
+
+    @RequestMapping(value = "/requester/getUserMessage/{username}", method = RequestMethod.GET)
+    public Response getRequesterMessage(@PathVariable("username") String username) {
+        Response response = userService.getUserMessage(username,"requester");
         return response;
     }
 
