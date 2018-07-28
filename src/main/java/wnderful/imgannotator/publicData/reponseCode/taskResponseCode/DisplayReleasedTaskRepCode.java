@@ -3,7 +3,9 @@ package wnderful.imgannotator.publicData.reponseCode.taskResponseCode;
 public enum DisplayReleasedTaskRepCode {
 
     SUCCESS(0,"查看已发布任务成功"),
-    FAIL(1,"查看已发布任务失败");
+    FAIL(1,"查看已发布任务失败"),
+    NOTFOUND(2,"无此发布者"),
+    NOTASK(3,"无发布任务");
 
     private int code;
     private String message;

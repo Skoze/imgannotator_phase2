@@ -2,8 +2,11 @@ package wnderful.imgannotator.dataService;
 
 import wnderful.imgannotator.entity.Mark;
 
-public interface MarkDataService {
-    Mark findMark(String workername, String taskname);
+import java.util.ArrayList;
 
-    boolean setMark(String workername, String taskname,String imgID, Mark mark);
+public interface MarkDataService {
+
+    boolean addMark(String workername, String taskname,String imgID, Mark mark);
+
+    ArrayList findAllMark(String taskname,String imgID);
 }

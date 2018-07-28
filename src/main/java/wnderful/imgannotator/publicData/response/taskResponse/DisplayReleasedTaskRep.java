@@ -7,17 +7,17 @@ import wnderful.imgannotator.vo.taskVo.DisplayTaskVo;
 public class DisplayReleasedTaskRep extends Response {
     private int code;
     private String message;
-    private DisplayTaskVo date;
+    private DisplayTaskVo data;
 
     public DisplayReleasedTaskRep(DisplayReleasedTaskRepCode repCode) {
         this.code = repCode.getCode();
         this.message = repCode.getMessage();
     }
 
-    public DisplayReleasedTaskRep(DisplayReleasedTaskRepCode repCode, DisplayTaskVo date) {
+    public DisplayReleasedTaskRep(DisplayReleasedTaskRepCode repCode, DisplayTaskVo data) {
         this.code = repCode.getCode();
         this.message = repCode.getMessage();
-        this.date = date;
+        this.data = data;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class DisplayReleasedTaskRep extends Response {
         return message;
     }
 
-    public DisplayTaskVo getDate() {
-        return date;
+    public DisplayTaskVo getData() {
+        return data;
     }
 }

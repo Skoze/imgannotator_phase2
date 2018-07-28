@@ -16,7 +16,17 @@ public class ImgDataServiceImpl implements ImgDataService {
     }
 
     @Override
-    public boolean uploadImg(String taskname,Img img, byte[] bytes) {
+    public String findAImgURL(String taskname, String workername) {
+        return "a.img";
+    }
+
+    @Override
+    public String findFirstImgURL(String taskname) {
+        return "picture/a.img";
+    }
+
+    @Override
+    public boolean uploadImg(String taskname,String imgID, byte[] bytes) {
         return false;
     }
 }

@@ -1,16 +1,16 @@
 package wnderful.imgannotator.request.mark;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONObject;
 
 public class ImgMarkRequest {
     private String taskname;
     private String imgID;
-    private JSONPObject marks;
+    private JSONObject marks;
 
     public ImgMarkRequest() {
     }
 
-    public ImgMarkRequest(String taskname, String imgID, JSONPObject marks) {
+    public ImgMarkRequest(String taskname, String imgID, JSONObject marks) {
         this.taskname = taskname;
         this.imgID = imgID;
         this.marks = marks;
@@ -24,7 +24,7 @@ public class ImgMarkRequest {
         return imgID;
     }
 
-    public JSONPObject getMarks() {
+    public JSONObject getMarks() {
         return marks;
     }
 }

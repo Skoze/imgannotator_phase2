@@ -14,33 +14,28 @@ public class UserDataServiceImpl implements UserDataService {
     TaskDataServiceImpl taskDataService = new TaskDataServiceImpl();
 
     @Override
-    public boolean newWorker(Worker worker) {
+    public boolean newUser(User user) {
         return false;
     }
 
     @Override
-    public boolean newRequester(Requester requester) {
-        return false;
+    public boolean setWorkerMessage(User worker) {
+        return true;
     }
 
     @Override
-    public boolean setWorkerMessage(Worker worker) {
-        return false;
-    }
-
-    @Override
-    public boolean setRequesterMessage(Requester requester) {
-        return false;
+    public boolean setRequesterMessage(User requester) {
+        return true;
     }
 
     @Override
     public boolean workerExist(String workername) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean requesterExist(String requestername) {
-        return false;
+        return true;
     }
 
     @Override
@@ -55,17 +50,17 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public User findUser(String username) {
-        return null;
+        return new User();
     }
 
     @Override
     public Worker findWorker(String workername) {
-        return null;
+        return new Worker();
     }
 
     @Override
     public Requester findRequester(String requestername) {
-        return null;
+        return new Requester();
     }
 
     @Override
@@ -75,11 +70,11 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public boolean addWorkerTask(String workerName, Task task) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean abandonWorkerTask(String workername, Task task) {
-        return false;
+        return true;
     }
 }

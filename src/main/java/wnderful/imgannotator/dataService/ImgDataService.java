@@ -7,5 +7,9 @@ public interface ImgDataService {
 
     Img findFirstImg(String taskname);
 
-    boolean uploadImg(String taskname,Img img ,byte[] bytes);
+    String findAImgURL(String taskname,String workername);
+
+    String  findFirstImgURL(String taskname);
+
+    boolean uploadImg(String taskname,String imgID ,byte[] bytes);
 }

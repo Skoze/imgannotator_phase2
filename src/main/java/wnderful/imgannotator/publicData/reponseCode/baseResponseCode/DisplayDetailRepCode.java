@@ -2,7 +2,8 @@ package wnderful.imgannotator.publicData.reponseCode.baseResponseCode;
 
 public enum DisplayDetailRepCode {
     SUCCESS(0,"查看任务详情成功"),
-    FAIL(1,"查看任务详情失败");
+    FAIL(1,"查看任务详情失败"),
+    NOTASK(2,"未找到任务");
 
     private int code;
     private String message;

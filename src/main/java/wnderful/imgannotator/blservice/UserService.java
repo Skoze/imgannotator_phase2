@@ -5,5 +5,5 @@ import wnderful.imgannotator.publicData.response.Response;
 public interface UserService {
      Response getUserMessage(String username,String role);
 
-     Response updateUserMessage(String username, String newUsername, String newEmail, String oldPassword, String newPassword);
+     Response updateUserMessage(String username, String newEmail, String oldPassword, String newPassword);
 }

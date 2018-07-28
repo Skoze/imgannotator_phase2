@@ -30,7 +30,7 @@ public class DisplayReceiptTaskRep extends Response {
         return message;
     }
 
-    public DisplayTaskVo getVo() {
+    public DisplayTaskVo getData() {
         return data;
     }
 }

@@ -3,7 +3,8 @@ package wnderful.imgannotator.publicData.reponseCode.userResponseCode;
 public enum GetUserMassageRepCode {
 
     SUCCESS(0,"获取用户信息成功"),
-    FAIL(1,"获取用户信息失败");
+    FAIL(1,"获取用户信息失败"),
+    NOTFOUND(2,"该用户不存在");
 
     private int code;
     private String message;

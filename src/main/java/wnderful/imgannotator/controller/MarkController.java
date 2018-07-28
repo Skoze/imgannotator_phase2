@@ -27,7 +27,7 @@ public class MarkController {
 
     @RequestMapping(value = "/findMark/{username}",method = RequestMethod.POST)
     public Response findMark(@PathVariable("username") String username, @RequestBody FindMarkRequest request){
-        Response response = markService.findMark(request.getTaskname(),request.getImgID());
+        Response response = markService.findMark(request.getTaskname(),request.getImgID(),username);
         return response;
     }
 }

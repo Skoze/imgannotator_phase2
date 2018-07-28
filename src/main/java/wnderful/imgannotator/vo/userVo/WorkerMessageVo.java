@@ -1,11 +1,12 @@
 package wnderful.imgannotator.vo.userVo;
 
-public class WorkerMessageVo extends UserMessageVo{
+public class WorkerMessageVo extends UserMessageVo {
     private String username;
     private String email;
     private int points;
     private int completedTasks;
     private int completedImages;
+    private String role = "worker";
 
     public WorkerMessageVo() {
         this.username = "";
@@ -15,7 +16,7 @@ public class WorkerMessageVo extends UserMessageVo{
         this.completedImages = -1;
     }
 
-    public WorkerMessageVo(String username, String email, int points, String role, int releasedTasks, int completedTasks, int completedImages) {
+    public WorkerMessageVo(String username, String email, int points, int completedTasks, int completedImages) {
         this.username = username;
         this.email = email;
         this.points = points;
@@ -41,6 +42,11 @@ public class WorkerMessageVo extends UserMessageVo{
 
     public int getCompletedImages() {
         return completedImages;
+    }
+
+    @Override
+    public String getRole() {
+        return role;
     }
 
     public void setUsername(String username) {

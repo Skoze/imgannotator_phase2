@@ -6,13 +6,11 @@ import wnderful.imgannotator.entity.user.User;
 import wnderful.imgannotator.entity.user.Worker;
 
 public interface UserDataService {
-    boolean newWorker(Worker worker);
+    boolean newUser(User user);
 
-    boolean newRequester(Requester requester);
+    boolean setWorkerMessage(User worker);
 
-    boolean setWorkerMessage(Worker worker);
-
-    boolean setRequesterMessage(Requester requester);
+    boolean setRequesterMessage(User requester);
 
     boolean addWorkerTask(String workerName, Task task);
 

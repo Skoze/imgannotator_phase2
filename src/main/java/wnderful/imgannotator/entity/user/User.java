@@ -7,6 +7,10 @@ public class User {
     private String role;
 
     public User() {
+        this.username = "test";
+        this.email = "test@test.com";
+        this.password = "123456";
+        this.role = "worker";
     }
 
     public User(String username, String password, String email, String role) {

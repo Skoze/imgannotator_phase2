@@ -5,7 +5,8 @@ public enum LoginRepCode {
     UNKNOW(-1,"未知错误"),
     SUCCESS(0,"登陆成功"),
     FAIL(1,"登录失败"),
-    NOTEXIST(2,"用户不存在");
+    NOTEXIST(2,"用户不存在"),
+    WRONGPASSWORD(3,"密码不正确");
 
     private int code;
     private String message;

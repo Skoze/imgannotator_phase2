@@ -5,6 +5,7 @@ public class RequesterMessageVo extends UserMessageVo{
     private String email;
     private int points;
     private int releasedTasks;
+    private String role = "requester";
 
     public RequesterMessageVo() {
         this.username = "";
@@ -34,6 +35,11 @@ public class RequesterMessageVo extends UserMessageVo{
 
     public int getReleasedTasks() {
         return releasedTasks;
+    }
+
+    @Override
+    public String getRole() {
+        return role;
     }
 
     public void setUsername(String username) {
