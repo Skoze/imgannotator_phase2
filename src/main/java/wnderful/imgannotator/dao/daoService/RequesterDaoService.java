@@ -9,8 +9,8 @@ public class RequesterDaoService {
         return null;
     }
 
-    public UserData findUser(String requestername){
-        return new UserData();
+    public UserData findRequester(String requestername){
+        return null;
     }
 
     public boolean setRequester(UserData userData){

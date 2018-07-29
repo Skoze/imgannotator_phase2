@@ -25,7 +25,7 @@ public class UserController {
 
     @RequestMapping(value = "/updateUserMessage/{username}", method = RequestMethod.POST)
     public Response updateUserMessage(@PathVariable("username") String username,@RequestBody UpdateUserRequest requst) {
-        Response response = userService.updateUserMessage(username,requst.getNewEmail(),requst.getOldPassword(),requst.getNewPassword());
+        Response response = userService.updateUserMessage(username,requst.getNewEmail(),requst.getOldPassword(),requst.getNewPassword(),requst.getRole());
         return response;
     }
 }

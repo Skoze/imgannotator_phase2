@@ -13,8 +13,12 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public Response uploadImg(byte[] bytes, String imgID,String taskname) {
-        if(imgDataService.uploadImg(taskname,imgID,bytes)){
-            return new UploadRep(UploadRepCode.SUCCESS);
+        if(imgDataService.imgExist(taskname,imgID)){
+           return new UploadRep(UploadRepCode.REPEAT);
+        }else {
+            if(imgDataService.uploadImg(taskname,imgID,bytes)){
+                return new UploadRep(UploadRepCode.SUCCESS);
+            }
         }
         return new UploadRep(UploadRepCode.FAIL);
     }

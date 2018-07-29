@@ -2,7 +2,8 @@ package wnderful.imgannotator.publicData.reponseCode.uploadResponseCode;
 
 public enum UploadRepCode {
     SUCCESS(0,"图片上传成功"),
-    FAIL(1,"图片上传失败");
+    FAIL(1,"图片上传失败"),
+    REPEAT(2,"图片重名");
 
     private int code;
     private String message;

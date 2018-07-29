@@ -9,11 +9,11 @@ public class ProcessDaoService {
         return null;
     }
 
-    public ArrayList selectByWorker(String workername){
+    public ArrayList<ProcessData> selectByWorker(String workername){
         return null;
     }
 
-    public ArrayList selectByTask(String taskname){
+    public ArrayList<ProcessData> selectByTask(String taskname){
         return null;
     }
 

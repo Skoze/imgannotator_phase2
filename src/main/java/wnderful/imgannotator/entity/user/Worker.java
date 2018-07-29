@@ -18,6 +18,11 @@ public class Worker extends User {
         this.completedTasks = 0;
     }
 
+    public Worker(String username, String password, String email, int points) {
+        super(username, password, email, "worker");
+        this.points = points;
+    }
+
     public Worker(String username, String password, String email, String role, int points, int completedTasks, int completedImages) {
         super(username, password, email, role);
         this.points = points;
@@ -56,5 +61,21 @@ public class Worker extends User {
 
     public Task getTask(String taskname) {
         return null;
+    }
+
+    public void setReceiptTasks(ArrayList<Task> receiptTasks) {
+        this.receiptTasks = receiptTasks;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setCompletedTasks(int completedTasks) {
+        this.completedTasks = completedTasks;
+    }
+
+    public void setCompletedImages(int completedImages) {
+        this.completedImages = completedImages;
     }
 }

@@ -11,6 +11,11 @@ public class Requester extends User {
         super();
     }
 
+    public Requester(String username, String password, String email, int points) {
+        super(username, password, email, "requester");
+        this.points = points;
+    }
+
     public Requester(String username, String password, String email, String role, int points, int releasedTasks) {
         super(username, password, email, role);
         this.points = points;
@@ -28,5 +33,18 @@ public class Requester extends User {
     @Override
     public String getRole() {
         return role;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setReleasedTasks(int releasedTasks) {
+        this.releasedTasks = releasedTasks;
+    }
+
+    @Override
+    public void setRole(String role) {
+        this.role = role;
     }
 }

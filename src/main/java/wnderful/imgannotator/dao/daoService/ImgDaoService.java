@@ -10,6 +10,10 @@ public class ImgDaoService {
         return null;
     }
 
+    public ArrayList<ImgData> selectByTask(String taskname){
+        return null;
+    }
+
     public ImgData findImg(String imgname){
         return new ImgData();
     }

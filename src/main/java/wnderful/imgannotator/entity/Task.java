@@ -22,6 +22,19 @@ public class Task {
     public Task() {
     }
 
+    public Task(String taskname, Requester requester, String taskDescription, String imgsURL, String releasedTime, int taskTime, String[] taskTag, int credits, int maxWorkers) {
+        this.taskname = taskname;
+        this.requester = requester;
+        this.taskDescription = taskDescription;
+        this.imgsURL = imgsURL;
+        this.releasedTime = releasedTime;
+        this.taskTime = taskTime;
+        this.taskTag = taskTag;
+        this.credits = credits;
+        this.maxWorkers = maxWorkers;
+    }
+
+    //发布任务时实例初始化
     public Task(String taskname, Requester requester, String taskDescription, String imgsURL, int taskTime, String[] taskTag, int credits, int maxWorkers) {
         this.taskname = taskname;
         this.requester = requester;
@@ -126,6 +139,14 @@ public class Task {
 
     public void setMaxWorkers(int maxWorkers) {
         this.maxWorkers = maxWorkers;
+    }
+
+    public void setNumberOfImages(int numberOfImages) {
+        this.numberOfImages = numberOfImages;
+    }
+
+    public void setRecentWorkers(int recentWorkers) {
+        this.recentWorkers = recentWorkers;
     }
 
     public String getNextImgURL(){

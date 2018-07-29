@@ -22,13 +22,9 @@ public interface UserDataService {
 
     boolean userExist(String username);
 
-    String findRole(String username);
-
     User findUser(String username);
 
     Worker findWorker(String workername);
 
     Requester findRequester(String requestername);
-
-    String findPassWord(String username);
 }

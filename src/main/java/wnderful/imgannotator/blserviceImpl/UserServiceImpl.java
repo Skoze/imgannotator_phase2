@@ -42,12 +42,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UpdateUserMessageRep updateUserMessage(String username, String newEmail, String oldPassword, String newPassword) {
-        User user = userDataService.findUser("username");
+    public UpdateUserMessageRep updateUserMessage(String username, String newEmail, String oldPassword, String newPassword,String role) {
 
-        if (user == null) {
+        if (!userDataService.userExist(username)) {
             return new UpdateUserMessageRep(UpdateUserMessageRepCode.NOTFOUND);
         } else {
+            User user = userDataService.findUser("username");
             user.setEmail(newEmail);
 
             if (oldPassword.equals(newPassword)) {
@@ -56,9 +56,9 @@ public class UserServiceImpl implements UserService {
                 user.setPassword(newPassword);
 
                 boolean success = false;
-                if (user.getRole() == "worker") {
+                if (role .equals("worker") ) {
                     success = userDataService.setWorkerMessage(user);
-                } else if (user.getRole() == "requester") {
+                } else if (role.equals("requester")) {
                     success = userDataService.setRequesterMessage(user);
                 }
                 if(success){

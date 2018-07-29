@@ -1,6 +1,8 @@
 package wnderful.imgannotator.dao.daoService;
 
+import wnderful.imgannotator.dao.data.UserData;
 import wnderful.imgannotator.dao.data.WorkData;
+import wnderful.imgannotator.entity.user.User;
 
 import java.util.ArrayList;
 
@@ -9,11 +11,15 @@ public class WorkDaoService {
         return null;
     }
 
-    public ArrayList selectbyImg(String imgname){
+    public ArrayList<String> selectWorkerByImg(String imgname){
         return null;
     }
 
-    public ArrayList selectbyWorker(String workername){
+    public ArrayList<WorkData> selectbyWorker(String workername){
+        return null;
+    }
+
+    public ArrayList<String> selectImgByWorker(String workername){
         return null;
     }
 
@@ -24,7 +30,6 @@ public class WorkDaoService {
     public boolean setWork(WorkData workData){
         return true;
     }
-
     public boolean addWork(WorkData workData){
         return true;
     }

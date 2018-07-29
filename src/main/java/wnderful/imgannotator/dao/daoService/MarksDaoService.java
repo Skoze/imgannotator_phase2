@@ -9,7 +9,7 @@ public class MarksDaoService {
         return null;
     }
 
-    public ArrayList selectByImg(String imgname){
+    public ArrayList<MarksData> selectByImg(String imgname){
         return null;
     }
 

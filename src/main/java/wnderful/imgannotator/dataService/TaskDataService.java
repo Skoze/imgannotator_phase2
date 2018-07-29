@@ -22,9 +22,9 @@ public interface TaskDataService {
 
     boolean isEnd(String taskname);
 
-    boolean isComplete(String taskname,String Workername);
+    boolean isComplete(String taskname,String workername);
 
-    boolean isRelease(String taskanem,String requestername);
+    boolean isRelease(String taskname,String requestername);
 
     ArrayList<Task> findReleaseTasks(String requestername);
 
