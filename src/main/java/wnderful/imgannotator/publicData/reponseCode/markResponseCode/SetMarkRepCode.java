@@ -5,7 +5,8 @@ public enum SetMarkRepCode {
     FAIL(1,"提交标记失败"),
     NOTFOUND(2,"无此工人"),
     NOTASK(3,"任务未接受"),
-    END(4,"任务已结束");
+    END(4,"任务已结束"),
+    NOIMG(5,"无此图片");
 
     private int code;
     private String message;

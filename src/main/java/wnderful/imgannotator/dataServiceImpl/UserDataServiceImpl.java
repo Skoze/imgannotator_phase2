@@ -79,6 +79,7 @@ public class UserDataServiceImpl implements UserDataService {
             UserData userData = workerDaoService.findWorker(username);
             return new User(userData.getUsername(),userData.getPassword(),userData.getEmail(),userData.getRole());
         }else {
+            System.out.println("Null");
             return null;
         }
     }
@@ -107,7 +108,7 @@ public class UserDataServiceImpl implements UserDataService {
             }
 
             //查询完成图片数
-            ArrayList<WorkData> workDatas = workDaoService.selectbyWorker(workername);
+            ArrayList<WorkData> workDatas = workDaoService.selectByWorker(workername);
             if(workDatas==null){
                 worker.setCompletedImages(0);
             }else {

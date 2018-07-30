@@ -2,7 +2,7 @@ package wnderful.imgannotator.dao.data;
 
 public class ProcessData {
     private String processname;
-    private String username;
+    private String workername;
     private String taskname;
     private int process;
     private int imgsNum;
@@ -12,7 +12,7 @@ public class ProcessData {
 
     public ProcessData(String processname, String username, String taskname, int process, int imgsNum) {
         this.processname = processname;
-        this.username = username;
+        this.workername = username;
         this.taskname = taskname;
         this.process = process;
         this.imgsNum = imgsNum;
@@ -22,8 +22,8 @@ public class ProcessData {
         return processname;
     }
 
-    public String getUsername() {
-        return username;
+    public String getWorkername() {
+        return workername;
     }
 
     public String getTaskname() {
@@ -42,8 +42,8 @@ public class ProcessData {
         this.processname = processname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setWorkername(String username) {
+        this.workername = username;
     }
 
     public void setTaskname(String taskname) {

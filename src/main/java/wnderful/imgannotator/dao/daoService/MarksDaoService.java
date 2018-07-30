@@ -1,16 +1,32 @@
 package wnderful.imgannotator.dao.daoService;
 
+import com.alibaba.fastjson.JSON;
 import wnderful.imgannotator.dao.data.mark.MarksData;
+import wnderful.imgannotator.util.FileHelper;
 
 import java.util.ArrayList;
 
 public class MarksDaoService {
+    private FileHelper fileHelper = new FileHelper();
+
     public ArrayList selectAll(){
         return null;
     }
 
     public ArrayList<MarksData> selectByImg(String imgname){
-        return null;
+        ArrayList<String> list = fileHelper.readList("mark/");
+        ArrayList<MarksData> marksDataArrayList = new ArrayList<>();
+        if(list!=null){
+            for(String content:list){
+                MarksData marksData = JSON.parseObject(content,MarksData.class);
+                if(marksData.getImgname().equals(imgname)){
+                    marksDataArrayList.add(marksData);
+                }
+            }
+            return marksDataArrayList;
+        }else {
+            return null;
+        }
     }
 
     public ArrayList selectByWorker(String workername){
@@ -26,7 +42,8 @@ public class MarksDaoService {
     }
 
     public boolean addMarks(MarksData marksData){
-        return true;
+        String content = JSON.toJSONString(marksData);
+        return fileHelper.write("mark/"+marksData.getMarksname(),content);
     }
 
     public boolean deleteMarks(String marksName){

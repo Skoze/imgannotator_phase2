@@ -5,7 +5,7 @@ public enum ReceiptTaskRepCode {
     SUCCESS(0,"接受任务成功"),
     FAIL(1,"接受任务失败"),
     NOTFOUND(2,"无此工人"),
-    NOTASK(3,"无接受任务"),
+    NOTASK(3,"无此任务"),
     FULL(4,"任务已满额");
 
     private int code;

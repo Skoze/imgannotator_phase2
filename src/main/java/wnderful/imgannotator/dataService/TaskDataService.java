@@ -10,6 +10,8 @@ public interface TaskDataService {
 
     int findProcess(String taskname,String workername);
 
+    int findTaskProcess(String taskname);
+
     boolean exist(String taskname);
 
     boolean uploadTask(Task task);

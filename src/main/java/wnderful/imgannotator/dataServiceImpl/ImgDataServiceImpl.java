@@ -27,11 +27,10 @@ public class ImgDataServiceImpl implements ImgDataService {
                 return imgDataArrayList.get(0).getImgURL();
             }else {
                 for(ImgData imgData:imgDataArrayList){
-                    String imgname = imgData.getImgname();
-                    if(imgnames.contains(imgname)){
-                        continue;
-                    }else {
-                        return imgData.getImgURL();
+                    for(String imgName:imgnames){
+                        if(!imgData.getImgname().equals(imgName)){
+                            return imgData.getImgURL();
+                        }
                     }
                 }
             }
@@ -42,15 +41,19 @@ public class ImgDataServiceImpl implements ImgDataService {
     //返回任务的封面图（第一张图片）
     @Override
     public String findFirstImgURL(String taskname) {
-        if(imgDaoService.selectByTask(taskname)!=null){
-            return imgDaoService.selectByTask(taskname).get(0).getImgURL();
+        ArrayList<ImgData> imgData = imgDaoService.selectByTask(taskname);
+        if(imgData!=null){
+            if(imgData.size()>0){
+                return imgData.get(0).getImgURL();
+            }
         }
         return null;
     }
 
     @Override
     public boolean imgExist(String taskname, String imgID) {
-        return false;
+        String imgname = taskname + "_"+imgID;
+        return imgDaoService.findImg(imgname)!=null;
     }
 
     @Override

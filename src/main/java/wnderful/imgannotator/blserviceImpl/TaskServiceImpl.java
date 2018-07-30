@@ -28,7 +28,7 @@ public class TaskServiceImpl implements TaskService {
                 return new ReleaseTaskRep(ReleaseTaskRepCode.REPEAT);
             } else {
                 String URL = imgDataService.findFirstImgURL(taskname);
-                if (URL .equals("") || URL == null) {
+                if (URL==null||URL .equals("") ) {
                     return new ReleaseTaskRep(ReleaseTaskRepCode.NOIMG);
                 } else {
                     Task task = new Task(taskname, requester, taskDescription, URL, taskTime, taskTag, credits, maxWorkers);

@@ -44,12 +44,7 @@ public class TaskDataServiceImpl implements TaskDataService {
                 }
 
                 //载入任务工人数
-                ArrayList<ProcessData> processData = processDaoService.selectByTask(taskname);
-                if (processData == null) {
-                    task.setRecentWorkers(0);
-                } else {
-                    task.setRecentWorkers(processData.size());
-                }
+                task.setRecentWorkers(findTaskProcess(taskname));
 
                 return task;
             }
@@ -72,6 +67,17 @@ public class TaskDataServiceImpl implements TaskDataService {
             return -1;
         } else {
             return process.getProcess();
+        }
+    }
+
+    //查询任务完成进度
+    @Override
+    public int findTaskProcess(String taskname) {
+        ArrayList<ProcessData> processData = processDaoService.selectByTask(taskname);
+        if (processData == null) {
+            return 0;
+        } else {
+            return processData.size();
         }
     }
 
@@ -126,7 +132,7 @@ public class TaskDataServiceImpl implements TaskDataService {
     //判断工人是否已经完成任务
     @Override
     public boolean isComplete(String taskname, String workername) {
-        String processname = taskname + "" + workername;
+        String processname = taskname + "_" + workername;
         ProcessData processData = processDaoService.findProcess(processname);
         if (processData != null) {
             return processData.getImgsNum() <= processData.getProcess();
@@ -150,6 +156,9 @@ public class TaskDataServiceImpl implements TaskDataService {
         ArrayList<TaskData> taskData = taskDaoService.selectByRequester(requestername);
         ArrayList<Task> tasks = entityHelper.dataToTasks(taskData);
         if (tasks != null) {
+            for(Task task:tasks){
+                task.setRecentWorkers(findTaskProcess(task.getTaskname()));
+            }
             return tasks;
         } else {
             return null;
@@ -177,6 +186,9 @@ public class TaskDataServiceImpl implements TaskDataService {
 
             ArrayList<Task> tasks = entityHelper.dataToTasks(taskDataArrayList);
             if (tasks != null) {
+                for(Task task:tasks){
+                    task.setRecentWorkers(findTaskProcess(task.getTaskname()));
+                }
                 return tasks;
             }
         }
@@ -188,6 +200,7 @@ public class TaskDataServiceImpl implements TaskDataService {
         //return tasks;
     }
 
+    //查询接受任务的工人
     @Override
     public ArrayList<Worker> findTaskWorker(String taskName) {
         ArrayList<Worker> workers = new ArrayList<>();
@@ -195,7 +208,7 @@ public class TaskDataServiceImpl implements TaskDataService {
 
         if (processDataArrayList != null) {
             for (ProcessData processData : processDataArrayList) {
-                String workername = processData.getUsername();
+                String workername = processData.getWorkername();
                 Worker worker = userDataService.findWorker(workername);
                 if (worker != null) {
                     workers.add(worker);
@@ -215,7 +228,13 @@ public class TaskDataServiceImpl implements TaskDataService {
     public ArrayList<Task> findAllTask() {
         ArrayList<TaskData> taskData = taskDaoService.selectAll();
         if(taskData != null){
-            return entityHelper.dataToTasks(taskData);
+            ArrayList<Task> tasks = entityHelper.dataToTasks(taskData);
+            if (tasks != null) {
+                for(Task task:tasks){
+                    task.setRecentWorkers(findTaskProcess(task.getTaskname()));
+                }
+                return tasks;
+            }
         }
         return null;
         //Task task = new Task("taskname", "imgURL", 1, null, 10, 10);

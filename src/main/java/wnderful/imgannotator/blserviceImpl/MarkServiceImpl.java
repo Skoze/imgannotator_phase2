@@ -13,7 +13,6 @@ import wnderful.imgannotator.publicData.reponseCode.markResponseCode.SetMarkRepC
 import wnderful.imgannotator.publicData.response.MarkResponse.FindMarkRep;
 import wnderful.imgannotator.publicData.response.MarkResponse.FindURLRep;
 import wnderful.imgannotator.publicData.response.MarkResponse.SetMarkRep;
-import wnderful.imgannotator.publicData.response.Response;
 import wnderful.imgannotator.util.CreateVoHelper;
 import wnderful.imgannotator.vo.MarkVo.ImgUrlVo;
 import wnderful.imgannotator.vo.MarkVo.MarkVo;
@@ -31,11 +30,18 @@ public class MarkServiceImpl implements MarkService {
     @Override
     public SetMarkRep setMark(String username, String taskname, String imgID, JSONObject marks) {
         if(userDataService.workerExist(username)){
-            if(taskDataService.isEnd(taskname)){
-                return new SetMarkRep(SetMarkRepCode.END);
-            }else{
-                if(markDataService.addMark(username,taskname,imgID,new Mark(marks))){
-                    return new SetMarkRep(SetMarkRepCode.SUCCESS);
+            if(taskDataService.findProcess(taskname,username) == -1){
+                return new SetMarkRep(SetMarkRepCode.NOTASK);
+            }else {
+                if(taskDataService.isEnd(taskname)){
+                    return new SetMarkRep(SetMarkRepCode.END);
+                }else{
+                    if(!imgDataService.imgExist(taskname,imgID)){
+                        return new SetMarkRep(SetMarkRepCode.NOIMG);
+                    }
+                    if(markDataService.addMark(username,taskname,imgID,new Mark(marks))){
+                        return new SetMarkRep(SetMarkRepCode.SUCCESS);
+                    }
                 }
             }
         }else{
@@ -45,30 +51,34 @@ public class MarkServiceImpl implements MarkService {
     }
 
     @Override
-    public Response findURL(String username, String taskname) {
+    public FindURLRep findURL(String username, String taskname) {
         if(userDataService.workerExist(username)){
             if(taskDataService.isEnd(taskname)){
                 return new FindURLRep(FindURLRepCode.END);
             }else{
-                if(taskDataService.isComplete(taskname,username)){
-                    return new FindURLRep(FindURLRepCode.COMPLETE);
-                }else{
-                    String URL  = imgDataService.findAImgURL(taskname,username);
-                    if(URL.equals("")||URL==null){
+                if(taskDataService.findProcess(taskname,username) == -1){
+                    return new FindURLRep(FindURLRepCode.NOTASK);
+                }else {
+                    if(taskDataService.isComplete(taskname,username)){
+                        return new FindURLRep(FindURLRepCode.COMPLETE);
                     }else{
-                        ImgUrlVo vo = new ImgUrlVo(URL);
-                        return new FindURLRep(FindURLRepCode.SUCCESS,vo);
+                        String URL  = imgDataService.findAImgURL(taskname,username);
+                        if(URL==null||URL.equals("")){
+                            return new FindURLRep(FindURLRepCode.FAIL);
+                        }else{
+                            ImgUrlVo vo = new ImgUrlVo(URL);
+                            return new FindURLRep(FindURLRepCode.SUCCESS,vo);
+                        }
                     }
                 }
             }
         }else{
             return new FindURLRep(FindURLRepCode.NOTFOUND);
         }
-        return new FindURLRep(FindURLRepCode.FAIL);
     }
 
     @Override
-    public Response findMark(String taskname, String imgID,String username) {
+    public FindMarkRep findMark(String taskname, String imgID,String username) {
         if(userDataService.requesterExist(username)){
             if(taskDataService.isRelease(taskname,username)){
                 ArrayList<Mark> marks = markDataService.findAllMark(taskname,imgID);

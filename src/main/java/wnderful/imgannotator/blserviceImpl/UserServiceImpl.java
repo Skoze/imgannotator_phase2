@@ -47,10 +47,13 @@ public class UserServiceImpl implements UserService {
         if (!userDataService.userExist(username)) {
             return new UpdateUserMessageRep(UpdateUserMessageRepCode.NOTFOUND);
         } else {
-            User user = userDataService.findUser("username");
+            User user = userDataService.findUser(username);
             user.setEmail(newEmail);
 
-            if (oldPassword.equals(newPassword)) {
+            if(!user.getPassword().equals(oldPassword)){
+                return new UpdateUserMessageRep(UpdateUserMessageRepCode.WRONG);
+            }
+            else if (oldPassword.equals(newPassword)) {
                 return new UpdateUserMessageRep(UpdateUserMessageRepCode.REPEAT);
             } else {
                 user.setPassword(newPassword);
