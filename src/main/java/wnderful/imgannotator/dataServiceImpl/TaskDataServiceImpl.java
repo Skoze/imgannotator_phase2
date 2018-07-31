@@ -1,21 +1,22 @@
 package wnderful.imgannotator.dataServiceImpl;
 
-import wnderful.imgannotator.dao.daoService.ImgDaoService;
-import wnderful.imgannotator.dao.daoService.ProcessDaoService;
-import wnderful.imgannotator.dao.daoService.TaskDaoService;
+import wnderful.imgannotator.dao.daoService.*;
 import wnderful.imgannotator.dao.data.ImgData;
 import wnderful.imgannotator.dao.data.ProcessData;
 import wnderful.imgannotator.dao.data.TaskData;
+import wnderful.imgannotator.dao.data.UserData;
 import wnderful.imgannotator.dataService.TaskDataService;
 import wnderful.imgannotator.entity.Task;
 import wnderful.imgannotator.entity.user.Requester;
-import wnderful.imgannotator.entity.user.Worker;
 import wnderful.imgannotator.util.EntityHelper;
 
 import java.util.ArrayList;
 
 public class TaskDataServiceImpl implements TaskDataService {
     private UserDataServiceImpl userDataService = new UserDataServiceImpl();
+
+    private WorkerDaoService workerDaoService = new WorkerDaoService();
+    private RequesterDaoService requesterDaoService = new RequesterDaoService();
     private TaskDaoService taskDaoService = new TaskDaoService();
     private ImgDaoService imgDaoService = new ImgDaoService();
     private ProcessDaoService processDaoService = new ProcessDaoService();
@@ -198,30 +199,6 @@ public class TaskDataServiceImpl implements TaskDataService {
         //ArrayList<Task> tasks = new ArrayList<Task>();
         //tasks.add(task);
         //return tasks;
-    }
-
-    //查询接受任务的工人
-    @Override
-    public ArrayList<Worker> findTaskWorker(String taskName) {
-        ArrayList<Worker> workers = new ArrayList<>();
-        ArrayList<ProcessData> processDataArrayList = processDaoService.selectByTask(taskName);
-
-        if (processDataArrayList != null) {
-            for (ProcessData processData : processDataArrayList) {
-                String workername = processData.getWorkername();
-                Worker worker = userDataService.findWorker(workername);
-                if (worker != null) {
-                    workers.add(worker);
-                }
-            }
-            return workers;
-        }else {
-            return null;
-        }
-        //ArrayList<Worker> workers = new ArrayList<Worker>();
-        //Worker worker = new Worker();
-        //workers.add(worker);
-        //return workers;
     }
 
     @Override

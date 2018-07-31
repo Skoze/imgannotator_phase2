@@ -6,7 +6,6 @@ import wnderful.imgannotator.dao.data.TaskData;
 import wnderful.imgannotator.dao.data.UserData;
 import wnderful.imgannotator.dao.data.WorkData;
 import wnderful.imgannotator.dataService.UserDataService;
-import wnderful.imgannotator.entity.Mark;
 import wnderful.imgannotator.entity.Task;
 import wnderful.imgannotator.entity.user.Requester;
 import wnderful.imgannotator.entity.user.User;
@@ -71,6 +70,52 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
+    public boolean modifyPoints(int points, String username) {
+        if(requesterExist(username)){
+            UserData userData = requesterDaoService.findRequester(username);
+            int newPoints = userData.getPoints() + points;
+            if(newPoints<=0){
+                return false;
+            }else {
+                userData.setPoints(newPoints);
+                return requesterDaoService.setRequester(userData);
+            }
+        }else if(workerExist(username)){
+            UserData userData = workerDaoService.findWorker(username);
+            int newPoints = userData.getPoints() + points;
+            if(newPoints<=0){
+                return false;
+            }else {
+                userData.setPoints(newPoints);
+                return workerDaoService.setWorker(userData);
+            }
+        }
+        return false;
+    }
+
+    //结算任务积分
+    @Override
+    public int settlePoints(String taskname,int totalPoints,int point) {
+        ArrayList<ProcessData> processDataArrayList = processDaoService.selectByTask(taskname);
+        if(processDataArrayList!=null){
+            int restPoints = totalPoints;
+            for(ProcessData processData:processDataArrayList){
+                UserData workerData = workerDaoService.findWorker(processData.getWorkername());
+                int getPoints = processData.getProcess()/processData.getImgsNum()*point;
+                workerData.setPoints(workerData.getPoints()+getPoints);
+                if(workerDaoService.setWorker(workerData)){
+                    restPoints = restPoints - getPoints;
+                }else {
+                    break;
+                }
+            }
+            return restPoints;
+        }else {
+            return totalPoints;
+        }
+    }
+
+    @Override
     public User findUser(String username) {
         if(requesterExist(username)){
             UserData userData = requesterDaoService.findRequester(username);
@@ -98,9 +143,8 @@ public class UserDataServiceImpl implements UserDataService {
                 worker.setCompletedTasks(0);
             }else{
                 int completedTasks = 0;
-                for(int i = 0;i < processes.size();i++){
-                    ProcessData processData = processes.get(i);
-                    if(processData.getProcess() == processData.getImgsNum()){
+                for (ProcessData processData : processes) {
+                    if (processData.getProcess() == processData.getImgsNum()) {
                         completedTasks++;
                     }
                 }
@@ -147,16 +191,24 @@ public class UserDataServiceImpl implements UserDataService {
         return processDaoService.addProcess(processData);
     }
 
+    //查询接受任务的工人
     @Override
-    public boolean abandonWorkerTask(String workername, Task task) {
-        UserData userData = workerDaoService.findWorker(workername);
-        String processname = task.getTaskname()+"_"+workername;
-        ProcessData processData = processDaoService.findProcess(processname);
+    public ArrayList<Worker> findTaskWorker(String taskName) {
+        ArrayList<Worker> workers = new ArrayList<>();
+        ArrayList<ProcessData> processDataArrayList = processDaoService.selectByTask(taskName);
 
-        double getPoints = task.getCredits() * processData.getProcess() / processData.getImgsNum();
-        userData.setPoints(userData.getPoints() + (int) getPoints);
-
-        return processDaoService.deleteProcess(processname)&&workerDaoService
-                .setWorker(userData);
+        if (processDataArrayList != null) {
+            for (ProcessData processData : processDataArrayList) {
+                String workername = processData.getWorkername();
+                Worker worker = findWorker(workername);
+                if (worker != null) {
+                    workers.add(worker);
+                }
+            }
+            return workers;
+        }else {
+            return null;
+        }
     }
+
 }

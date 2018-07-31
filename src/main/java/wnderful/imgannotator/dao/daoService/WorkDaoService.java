@@ -1,9 +1,7 @@
 package wnderful.imgannotator.dao.daoService;
 
 import com.alibaba.fastjson.JSON;
-import wnderful.imgannotator.dao.data.UserData;
 import wnderful.imgannotator.dao.data.WorkData;
-import wnderful.imgannotator.entity.user.User;
 import wnderful.imgannotator.util.FileHelper;
 
 import java.util.ArrayList;

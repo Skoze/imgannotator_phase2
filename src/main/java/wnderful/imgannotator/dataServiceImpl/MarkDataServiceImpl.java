@@ -1,7 +1,6 @@
 package wnderful.imgannotator.dataServiceImpl;
 
 import com.alibaba.fastjson.JSON;
-import wnderful.imgannotator.dao.daoService.ImgDaoService;
 import wnderful.imgannotator.dao.daoService.MarksDaoService;
 import wnderful.imgannotator.dao.daoService.ProcessDaoService;
 import wnderful.imgannotator.dao.daoService.WorkDaoService;
@@ -32,7 +31,7 @@ public class MarkDataServiceImpl implements MarkDataService {
                 ProcessData processData = processDaoService.findProcess(processname);
                 processData.setProcess(processData.getProcess()+1);
                 return processDaoService.setProcess(processData);
-            };
+            }
         }
         return false;
     }

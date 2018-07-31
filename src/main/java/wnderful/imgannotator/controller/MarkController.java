@@ -11,23 +11,20 @@ import wnderful.imgannotator.request.mark.ImgMarkRequest;
 @RequestMapping(value = "/service/mark")
 public class MarkController {
 
-    final MarkServiceImpl markService = new MarkServiceImpl();
+    private final MarkServiceImpl markService = new MarkServiceImpl();
 
     @RequestMapping(value = "/setMark/{username}", method = RequestMethod.POST)
     public Response setMark(@PathVariable("username") String username, @RequestBody ImgMarkRequest request) {
-        Response response = markService.setMark(username,request.getTaskname(),request.getImgID(),request.getMarks());
-        return response;
+        return markService.setMark(username,request.getTaskname(),request.getImgID(),request.getMarks());
     }
 
     @RequestMapping(value = "/findURL/{username}", method = RequestMethod.POST)
     public Response findURL(@PathVariable("username") String username,@RequestBody GetURLRequest request) {
-        Response response = markService.findURL(username,request.getTaskname());
-        return response;
+        return markService.findURL(username,request.getTaskname());
     }
 
     @RequestMapping(value = "/findMark/{username}",method = RequestMethod.POST)
     public Response findMark(@PathVariable("username") String username, @RequestBody FindMarkRequest request){
-        Response response = markService.findMark(request.getTaskname(),request.getImgID(),username);
-        return response;
+        return markService.findMark(request.getTaskname(),request.getImgID(),username);
     }
 }

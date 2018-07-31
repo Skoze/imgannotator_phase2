@@ -40,6 +40,7 @@ public class BaseServiceImpl implements BaseService {
                     return new LoginRep(LoginRepCode.SUCCESS, vo);
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    return new LoginRep(LoginRepCode.FAIL);
                 }
             } else {
                 return new LoginRep(LoginRepCode.WRONGPASSWORD);
@@ -47,20 +48,20 @@ public class BaseServiceImpl implements BaseService {
         } else {
             return new LoginRep(LoginRepCode.NOTEXIST);
         }
-        return new LoginRep(LoginRepCode.UNKNOW);
     }
 
     @Override
     public SignUpRep signUp(String username, String password, String email, String role) {
         if (userDataService.userExist(username)) {
-            return new SignUpRep(SignUpRepCode.NAMEREPEAT);
-        } else {
             User user = new User(username, password, email, role);
             if (userDataService.newUser(user)) {
                 return new SignUpRep(SignUpRepCode.SUCCESS);
+            }else {
+                return new SignUpRep(SignUpRepCode.FAIL);
             }
+        } else {
+            return  new SignUpRep(SignUpRepCode.NAMEREPEAT);
         }
-        return new SignUpRep(SignUpRepCode.FAIL);
     }
 
     @Override
@@ -68,18 +69,20 @@ public class BaseServiceImpl implements BaseService {
         if (taskDataService.exist(taskName)) {
             Task task = taskDataService.findTask(taskName);
             if (task != null) {
-                ArrayList<Worker> workers = taskDataService.findTaskWorker(taskName);
+                ArrayList<Worker> workers = userDataService.findTaskWorker(taskName);
                 if (workers != null) {
                     WorkerVo[] workerVos = createVoHelper.createWorkerVo(workers, taskName);
                     DisplayDetailVo vo = createVoHelper.createDisplayDetailVo(task, workerVos);
                     return new DisplayDetailRep(DisplayDetailRepCode.SUCCESS, vo);
-
+                }else {
+                    return new DisplayDetailRep(DisplayDetailRepCode.FAIL);
                 }
+            }else {
+                return new DisplayDetailRep(DisplayDetailRepCode.NOTASK);
             }
         } else {
             return new DisplayDetailRep(DisplayDetailRepCode.NOTASK);
         }
-        return new DisplayDetailRep(DisplayDetailRepCode.FAIL);
     }
 
     @Override
@@ -88,7 +91,8 @@ public class BaseServiceImpl implements BaseService {
         if(tasks!=null){
             DisplayTaskVo vo = createVoHelper.createDisplayTaskVo(tasks);
             return new DisplayAllTaskRep(DisplayAllTaskRepCode.SUCCESS, vo);
+        }else {
+            return new DisplayAllTaskRep(DisplayAllTaskRepCode.FAIL);
         }
-        return new DisplayAllTaskRep(DisplayAllTaskRepCode.FAIL);
     }
 }

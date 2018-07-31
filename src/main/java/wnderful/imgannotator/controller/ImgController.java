@@ -12,20 +12,18 @@ import wnderful.imgannotator.publicData.response.UploadResponse.UploadRep;
 
 
 @RestController
-@RequestMapping(value = "/service/images")
+@RequestMapping(value = "/base/images")
 public class ImgController {
 
-    final UploadServiceImpl uploadService = new UploadServiceImpl();
+    private final UploadServiceImpl uploadService = new UploadServiceImpl();
 
     @RequestMapping(value = "/upload/{taskname}",method = RequestMethod.POST)
     public Response uploadImg(@PathVariable("taskname") String taskname, MultipartFile imageObject){
         try {
-             Response response = uploadService.uploadImg(imageObject.getBytes(),imageObject.getOriginalFilename(),taskname);
-             return  response;
+            return uploadService.uploadImg(imageObject.getBytes(),imageObject.getOriginalFilename(),taskname);
         } catch (Exception e) {
             e.printStackTrace();
-             Response response = new UploadRep(UploadRepCode.FAIL);
-            return  response;
+            return new UploadRep(UploadRepCode.FAIL);
         }
     }
 }

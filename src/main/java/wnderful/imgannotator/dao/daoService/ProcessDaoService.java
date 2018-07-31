@@ -52,9 +52,9 @@ public class ProcessDaoService {
     }
 
 
-    public ProcessData findProcess(String prcessname){
-        if(fileHelper.dataExist("process/"+prcessname)){
-            String content = fileHelper.read("process/"+prcessname+ ".txt");
+    public ProcessData findProcess(String processname){
+        if(fileHelper.dataExist("process/"+processname)){
+            String content = fileHelper.read("process/"+processname+ ".txt");
             ProcessData processData = JSON.parseObject(content,ProcessData.class);
             return processData;
         }else {
@@ -73,6 +73,9 @@ public class ProcessDaoService {
     }
 
     public boolean deleteProcess(String processname) {
-        return true;
+        if(fileHelper.dataExist("process/"+processname)){
+            return fileHelper.dataExist("process/"+processname);
+        }
+        return false;
     }
 }

@@ -1,17 +1,16 @@
-package wnderful.imgannotator.publicData.response.taskResponse;
+package wnderful.imgannotator.publicData.response.userResponse;
 
-import wnderful.imgannotator.publicData.reponseCode.taskResponseCode.*;
+import wnderful.imgannotator.publicData.reponseCode.userResponseCode.LostPointsRepCode;
 import wnderful.imgannotator.publicData.response.Response;
 
-public class AbandonTaskRep extends Response {
+public class LostPointsRep extends Response {
     private int code;
     private String message;
 
-    public AbandonTaskRep(AbandonTaskRepCode repCode) {
+    public LostPointsRep(LostPointsRepCode repCode) {
         this.code = repCode.getCode();
         this.message = repCode.getMessage();
     }
-
 
     @Override
     public int getCode() {
@@ -22,5 +21,4 @@ public class AbandonTaskRep extends Response {
     public String getMessage() {
         return message;
     }
-
 }

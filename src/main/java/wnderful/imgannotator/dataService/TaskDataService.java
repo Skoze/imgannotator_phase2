@@ -33,6 +33,4 @@ public interface TaskDataService {
     ArrayList<Task> findReceiptTasks(String workername);
 
     ArrayList<Task> findAllTask();
-
-    ArrayList<Worker> findTaskWorker(String taskName);
 }
