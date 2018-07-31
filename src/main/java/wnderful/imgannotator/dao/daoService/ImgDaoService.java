@@ -30,7 +30,6 @@ public class ImgDaoService {
     }
 
     public ImgData findImg(String imgname){
-        selectByTask("taskname");
         if(fileHelper.dataExist("img/"+imgname)){
             String content = fileHelper.read("img/"+imgname+ ".txt");
             ImgData imgData = JSON.parseObject(content,ImgData.class);

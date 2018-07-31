@@ -1,29 +1,26 @@
 package wnderful.imgannotator.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import wnderful.imgannotator.blserviceImpl.UploadServiceImpl;
-import wnderful.imgannotator.publicData.reponseCode.uploadResponseCode.UploadRepCode;
+import org.springframework.web.bind.annotation.*;
+import wnderful.imgannotator.blserviceImpl.ImgServiceImpl;
 import wnderful.imgannotator.publicData.response.Response;
-import wnderful.imgannotator.publicData.response.UploadResponse.UploadRep;
+import wnderful.imgannotator.request.Img.CreatePackageRequest;
+import wnderful.imgannotator.request.Img.DeletePackageRequest;
 
 
 @RestController
-@RequestMapping(value = "/base/images")
+@RequestMapping(value = "/service/images")
 public class ImgController {
 
-    private final UploadServiceImpl uploadService = new UploadServiceImpl();
+    private final ImgServiceImpl imgService = new ImgServiceImpl();
 
-    @RequestMapping(value = "/upload/{taskname}",method = RequestMethod.POST)
-    public Response uploadImg(@PathVariable("taskname") String taskname, MultipartFile imageObject){
-        try {
-            return uploadService.uploadImg(imageObject.getBytes(),imageObject.getOriginalFilename(),taskname);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new UploadRep(UploadRepCode.FAIL);
-        }
+    @RequestMapping(value = "/createPackage/{username}", method = RequestMethod.POST)
+    public Response createPackage(@PathVariable("username")String username, @RequestBody CreatePackageRequest request) {
+        return imgService.createPackage(username,request.getTaskname());
     }
+
+    @RequestMapping(value = "/deletePackage/{username}", method = RequestMethod.POST)
+    public Response deletePackage(@PathVariable("username")String username, @RequestBody DeletePackageRequest request) {
+        return imgService.deletePackage(username,request.getTaskname());
+    }
+
 }

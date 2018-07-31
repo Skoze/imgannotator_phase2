@@ -1,6 +1,6 @@
-package wnderful.imgannotator.publicData.response.UploadResponse;
+package wnderful.imgannotator.publicData.response.ImgResponse;
 
-import wnderful.imgannotator.publicData.reponseCode.uploadResponseCode.UploadRepCode;
+import wnderful.imgannotator.publicData.reponseCode.ImgResponseCode.UploadRepCode;
 import wnderful.imgannotator.publicData.response.Response;
 
 public class UploadRep extends Response {

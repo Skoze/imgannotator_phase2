@@ -10,14 +10,13 @@ import java.util.Map;
 
 public class JwtHelper {
     public String createToken(String username) throws Exception{
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
         map.put("typ", "JWT");
-        String token = JWT.create()
+        return JWT.create()
                 .withHeader(map)//header
                 .withClaim("username", username)//payload
-                .sign(Algorithm.HMAC256("secret"));//加密
-        return token;
+                .sign(Algorithm.HMAC256("secret"));
     }
 
     public String verifyToken(String token,String key) throws Exception{

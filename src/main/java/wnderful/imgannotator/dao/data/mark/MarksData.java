@@ -1,7 +1,5 @@
 package wnderful.imgannotator.dao.data.mark;
 
-import com.alibaba.fastjson.JSONObject;
-
 public class MarksData {
     private String marksname;
     private String workername;

@@ -4,7 +4,6 @@ import wnderful.imgannotator.dao.daoService.*;
 import wnderful.imgannotator.dao.data.ImgData;
 import wnderful.imgannotator.dao.data.ProcessData;
 import wnderful.imgannotator.dao.data.TaskData;
-import wnderful.imgannotator.dao.data.UserData;
 import wnderful.imgannotator.dataService.TaskDataService;
 import wnderful.imgannotator.entity.Task;
 import wnderful.imgannotator.entity.user.Requester;
@@ -14,9 +13,6 @@ import java.util.ArrayList;
 
 public class TaskDataServiceImpl implements TaskDataService {
     private UserDataServiceImpl userDataService = new UserDataServiceImpl();
-
-    private WorkerDaoService workerDaoService = new WorkerDaoService();
-    private RequesterDaoService requesterDaoService = new RequesterDaoService();
     private TaskDaoService taskDaoService = new TaskDaoService();
     private ImgDaoService imgDaoService = new ImgDaoService();
     private ProcessDaoService processDaoService = new ProcessDaoService();

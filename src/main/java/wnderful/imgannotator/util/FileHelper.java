@@ -1,16 +1,20 @@
 package wnderful.imgannotator.util;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class FileHelper {
     public boolean dataExist(String fileName) {
         File file = new File("src/main/resources/static/data/" + fileName+".txt");
-        if(file.exists()){
-            return true;
-        }else {
-            return false;
-        }
+        return file.exists();
+    }
+
+    public boolean pictureExist(String taskname){
+        File file = new File("src/main/resources/static/picture/" + taskname);
+        return file.exists();
     }
 
     public boolean write(String pathname, String content) {
@@ -25,11 +29,22 @@ public class FileHelper {
         }
     }
 
+    public boolean writeFile(String pathname,byte[] bytes){
+        try{
+            Path path = Paths.get("src/main/resources/static/picture/"+pathname);
+            Files.write(path, bytes);
+            return true;
+        }catch (IOException ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     public String read(String name) {
         String content = "";
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("src/main/resources/static/data/" + name)));
-            String str = "";
+            String str;
             while ((str = in.readLine()) != null) {
                 content = content + str;
             }
@@ -61,13 +76,22 @@ public class FileHelper {
         }
     }
 
+    public boolean newFolder(String path){
+        File file = new File("src/main/resources/static/picture/" + path);
+        return file.mkdir();
+    }
+
     public String delete(String name) {
         try {
             File file = new File("src/main/resources/static/data/" + name + ".txt");
-            file.delete();
+            if(file.delete()){
+                return "done";
+            }else {
+                return "not exist";
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return "done";
+        return "fail";
     }
 }

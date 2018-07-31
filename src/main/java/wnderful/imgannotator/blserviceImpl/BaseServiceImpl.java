@@ -52,7 +52,7 @@ public class BaseServiceImpl implements BaseService {
 
     @Override
     public SignUpRep signUp(String username, String password, String email, String role) {
-        if (userDataService.userExist(username)) {
+        if (!userDataService.userExist(username)) {
             User user = new User(username, password, email, role);
             if (userDataService.newUser(user)) {
                 return new SignUpRep(SignUpRepCode.SUCCESS);

@@ -46,7 +46,13 @@ public class WorkDaoService {
     }
 
     public WorkData findWork(String workname){
-        return new WorkData();
+        if(fileHelper.dataExist("work/"+workname)){
+            String content = fileHelper.read("work/"+workname+ ".txt");
+            WorkData workData = JSON.parseObject(content,WorkData.class);
+            return  workData;
+        }else {
+            return null;
+        }
     }
 
     public boolean setWork(WorkData workData){

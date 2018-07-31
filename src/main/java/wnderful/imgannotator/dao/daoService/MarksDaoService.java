@@ -34,7 +34,13 @@ public class MarksDaoService {
     }
 
     public MarksData findMarks(String marksname){
-        return new MarksData();
+        if(fileHelper.dataExist("mark/"+marksname)){
+            String content = fileHelper.read("mark/"+marksname+ ".txt");
+            MarksData marksData = JSON.parseObject(content,MarksData.class);
+            return  marksData;
+        }else {
+            return null;
+        }
     }
 
     public boolean setMarks(MarksData marksData){

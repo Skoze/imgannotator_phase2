@@ -8,5 +8,9 @@ public interface MarkDataService {
 
     boolean addMark(String workername, String taskname,String imgID, Mark mark);
 
-    ArrayList findAllMark(String taskname,String imgID);
+    Mark findMark(String workername,String taskname,String imgID);
+
+    ArrayList<Mark> findAllMark(String taskname,String imgID);
+
+    boolean markExist(String workername,String taskname,String imgID);
 }

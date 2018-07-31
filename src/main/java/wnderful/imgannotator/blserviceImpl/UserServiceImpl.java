@@ -9,7 +9,6 @@ import wnderful.imgannotator.publicData.reponseCode.userResponseCode.AddPointsRe
 import wnderful.imgannotator.publicData.reponseCode.userResponseCode.GetUserMassageRepCode;
 import wnderful.imgannotator.publicData.reponseCode.userResponseCode.LostPointsRepCode;
 import wnderful.imgannotator.publicData.reponseCode.userResponseCode.UpdateUserMessageRepCode;
-import wnderful.imgannotator.publicData.response.Response;
 import wnderful.imgannotator.publicData.response.userResponse.AddPointsRep;
 import wnderful.imgannotator.publicData.response.userResponse.GetUserMassageRep;
 import wnderful.imgannotator.publicData.response.userResponse.LostPointsRep;
@@ -22,26 +21,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public GetUserMassageRep getUserMessage(String username, String role) {
-        if (role.equals("worker")) {
-            Worker worker = userDataService.findWorker(username);
-            if (worker != null) {
-                WorkerMessageVo vo = new WorkerMessageVo(worker.getUsername(), worker.getEmail(), worker.getPoints(),
-                        worker.getCompletedTasks(), worker.getCompletedImages());
-                return new GetUserMassageRep(GetUserMassageRepCode.SUCCESS, vo);
-            } else {
+        switch (role) {
+            case "requester":
+                Requester requester = userDataService.findRequester(username);
+                if (requester != null) {
+                    RequesterMessageVo vo = new RequesterMessageVo(requester.getUsername(), requester.getEmail(),
+                            requester.getPoints(), requester.getReleasedTasks());
+                    return new GetUserMassageRep(GetUserMassageRepCode.SUCCESS, vo);
+                }
+            case "worker":
+                Worker worker = userDataService.findWorker(username);
+                if (worker != null) {
+                    WorkerMessageVo vo = new WorkerMessageVo(worker.getUsername(), worker.getEmail(), worker.getPoints(),
+                            worker.getCompletedTasks(), worker.getCompletedImages());
+                    return new GetUserMassageRep(GetUserMassageRepCode.SUCCESS, vo);
+                }
+            default:
                 return new GetUserMassageRep(GetUserMassageRepCode.NOTFOUND);
-            }
-        } else if (role.equals("requester")) {
-            Requester requester = userDataService.findRequester(username);
-            if (requester != null) {
-                RequesterMessageVo vo = new RequesterMessageVo(requester.getUsername(), requester.getEmail(),
-                        requester.getPoints(), requester.getReleasedTasks());
-                return new GetUserMassageRep(GetUserMassageRepCode.SUCCESS, vo);
-            } else {
-                return new GetUserMassageRep(GetUserMassageRepCode.NOTFOUND);
-            }
-        }else {
-            return new GetUserMassageRep(GetUserMassageRepCode.FAIL);
         }
     }
 
@@ -50,33 +46,30 @@ public class UserServiceImpl implements UserService {
 
         if (userDataService.userExist(username)) {
             User user = userDataService.findUser(username);
-            if(user!=null){
+            if (user != null) {
                 user.setEmail(newEmail);
                 if (user.getPassword().equals(oldPassword)) {
                     if (!oldPassword.equals(newPassword)) {
                         user.setPassword(newPassword);
-                        if (role.equals("worker")) {
-                            if(userDataService.setWorkerMessage(user)){
-                                return new UpdateUserMessageRep(UpdateUserMessageRepCode.SUCCESS);
-                            }else {
+                        switch (role) {
+                            case "requester":
+                                if (userDataService.setRequesterMessage(user)) {
+                                    return new UpdateUserMessageRep(UpdateUserMessageRepCode.SUCCESS);
+                                }
+                            case "worker":
+                                if (userDataService.setWorkerMessage(user)) {
+                                    return new UpdateUserMessageRep(UpdateUserMessageRepCode.SUCCESS);
+                                }
+                            default:
                                 return new UpdateUserMessageRep(UpdateUserMessageRepCode.FAIL);
-                            }
-                        } else if (role.equals("requester")) {
-                            if(userDataService.setRequesterMessage(user)){
-                                return new UpdateUserMessageRep(UpdateUserMessageRepCode.SUCCESS);
-                            }else {
-                                return new UpdateUserMessageRep(UpdateUserMessageRepCode.FAIL);
-                            }
-                        }else {
-                            return new UpdateUserMessageRep(UpdateUserMessageRepCode.FAIL);
                         }
                     } else {
                         return new UpdateUserMessageRep(UpdateUserMessageRepCode.REPEAT);
                     }
-                }else {
+                } else {
                     return new UpdateUserMessageRep(UpdateUserMessageRepCode.WRONG);
                 }
-            }else {
+            } else {
                 return new UpdateUserMessageRep(UpdateUserMessageRepCode.FAIL);
             }
         } else {
@@ -86,34 +79,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AddPointsRep addPoints(String username, int points) {
-        if(userDataService.userExist(username)){
-            if(points > 0){
-                if (userDataService.modifyPoints(points,username)){
+        if (userDataService.userExist(username)) {
+            if (points > 0) {
+                if (userDataService.modifyPoints(points, username)) {
                     return new AddPointsRep(AddPointsRepCode.SUCCESS);
-                }else {
+                } else {
                     return new AddPointsRep(AddPointsRepCode.FAIL);
                 }
-            }else {
+            } else {
                 return new AddPointsRep(AddPointsRepCode.UNPROPER);
             }
-        }else {
+        } else {
             return new AddPointsRep(AddPointsRepCode.NOTFOUND);
         }
     }
 
     @Override
     public LostPointsRep lostPoints(String username, int points) {
-        if(userDataService.userExist(username)){
-            if(points > 0){
-                if(userDataService.modifyPoints(-points,username)){
+        if (userDataService.userExist(username)) {
+            if (points > 0) {
+                if (userDataService.modifyPoints(-points, username)) {
                     return new LostPointsRep(LostPointsRepCode.SUCCESS);
-                }else {
+                } else {
                     return new LostPointsRep(LostPointsRepCode.FAIL);
                 }
-            }else {
+            } else {
                 return new LostPointsRep(LostPointsRepCode.UNPROPER);
             }
-        }else {
+        } else {
             return new LostPointsRep(LostPointsRepCode.NOTFOUND);
         }
     }
