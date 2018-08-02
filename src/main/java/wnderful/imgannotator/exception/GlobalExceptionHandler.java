@@ -8,6 +8,7 @@ import wnderful.imgannotator.publicData.reponseCode.GlobalRepCode;
 import wnderful.imgannotator.publicData.response.GlobalResponse;
 import wnderful.imgannotator.publicData.response.Response;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @ControllerAdvice
 @RestController
@@ -26,6 +27,13 @@ public class GlobalExceptionHandler {
     public Response usernameExceptionHandler(IOException exception) {
         exception.printStackTrace();
         return new GlobalResponse(GlobalRepCode.WRITEERROE);
+    }
+
+    @ExceptionHandler(value = UnsupportedEncodingException.class)
+    @ResponseBody
+    public Response tokenExceptionHandler(UnsupportedEncodingException exception) {
+        exception.printStackTrace();
+        return new GlobalResponse(GlobalRepCode.TOKENERROR);
     }
 
 }

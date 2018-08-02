@@ -21,7 +21,7 @@ public class BaseController {
     private final ImgServiceImpl imgService = new ImgServiceImpl();
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Response login(@RequestBody LoginRequest request) {
+    public Response login (@RequestBody LoginRequest request) throws Exception{
         return baseService.login(request.getUsername(), request.getPassword());
     }
 

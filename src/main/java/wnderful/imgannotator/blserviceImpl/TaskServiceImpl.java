@@ -21,31 +21,35 @@ public class TaskServiceImpl implements TaskService {
     private CreateVoHelper helper = new CreateVoHelper();
 
     @Override
-    public ReleaseTaskRep releaseTask(String username, String taskname, String taskDescription, int numberOfImages, int taskTime, String[] taskTag, int credits, int maxWorkers) {
+    public ReleaseTaskRep releaseTask(String username, String taskname, String taskDescription, int taskTime, String[] taskTag, int credits, int maxWorkers) {
         if (userDataService.requesterExist(username)) {
-            Requester requester = userDataService.findRequester(username);
-            if (requester.getPoints() >= credits * maxWorkers) {
-                if (!taskDataService.exist(taskname)) {
-                    String URL = imgDataService.findFirstImgURL(taskname);
-                    if (URL != null && (!URL.equals(""))) {
-                        Task task = new Task(taskname, requester, taskDescription, URL, taskTime, taskTag, credits, maxWorkers);
-                        if (taskDataService.uploadTask(task)) {
-                            if (userDataService.modifyPoints(-credits * maxWorkers, username)) {
-                                return new ReleaseTaskRep(ReleaseTaskRepCode.SUCCESS);
+            if(taskTime>0&&credits>=0&&maxWorkers>0){
+                Requester requester = userDataService.findRequester(username);
+                if (requester.getPoints() >= credits * maxWorkers) {
+                    if (!taskDataService.exist(taskname)) {
+                        String URL = imgDataService.findFirstImgURL(taskname);
+                        if (URL != null && (!URL.equals(""))) {
+                            Task task = new Task(taskname, requester, taskDescription, URL, taskTime, taskTag, credits, maxWorkers);
+                            if (taskDataService.uploadTask(task)) {
+                                if (userDataService.modifyPoints(-credits * maxWorkers, username)) {
+                                    return new ReleaseTaskRep(ReleaseTaskRepCode.SUCCESS);
+                                } else {
+                                    return new ReleaseTaskRep(ReleaseTaskRepCode.ALREADYUPLOAD);
+                                }
                             } else {
-                                return new ReleaseTaskRep(ReleaseTaskRepCode.ALREADYUPLOAD);
+                                return new ReleaseTaskRep(ReleaseTaskRepCode.FAIL);
                             }
                         } else {
-                            return new ReleaseTaskRep(ReleaseTaskRepCode.FAIL);
+                            return new ReleaseTaskRep(ReleaseTaskRepCode.NOIMG);
                         }
                     } else {
-                        return new ReleaseTaskRep(ReleaseTaskRepCode.NOIMG);
+                        return new ReleaseTaskRep(ReleaseTaskRepCode.REPEAT);
                     }
                 } else {
-                    return new ReleaseTaskRep(ReleaseTaskRepCode.REPEAT);
+                    return new ReleaseTaskRep(ReleaseTaskRepCode.NOPOINT);
                 }
-            } else {
-                return new ReleaseTaskRep(ReleaseTaskRepCode.NOPOINT);
+            }else {
+                return new ReleaseTaskRep(ReleaseTaskRepCode.WRONGDATA);
             }
         } else {
             return new ReleaseTaskRep(ReleaseTaskRepCode.NOTFOUND);
@@ -56,7 +60,7 @@ public class TaskServiceImpl implements TaskService {
     public DisplayReleasedTaskRep displayReleasedTask(String username) {
         if (userDataService.requesterExist(username)) {
             ArrayList<Task> tasks = taskDataService.findReleaseTasks(username);
-            if (tasks != null) {
+            if (tasks != null&&tasks.size()>0) {
                 DisplayTaskVo vo = helper.createDisplayTaskVo(tasks);
                 if (vo != null) {
                     return new DisplayReleasedTaskRep(DisplayReleasedTaskRepCode.SUCCESS, vo);
@@ -93,17 +97,44 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public ModifyTaskRep modifyTask(String username, String taskname, String taskDescription, int remainTime, String[] taskTag, int maxWorkers) {
         if (userDataService.requesterExist(username)) {
-            Task task = taskDataService.findTask(taskname);
-            if (task != null) {
-                task.setTaskDescription(taskDescription);
-                task.setTaskTime(remainTime);
-                task.setTaskTag(taskTag);
-                task.setMaxWorkers(maxWorkers);
-                Boolean success = taskDataService.setTaskMessage(task);
-                if (success) {
-                    return new ModifyTaskRep(ModifyTaskRepCode.SUCCESS);
-                } else {
-                    return new ModifyTaskRep(ModifyTaskRepCode.FAIL);
+            Requester requester = userDataService.findRequester(username);
+            if (taskDataService.exist(taskname)) {
+                Task task = taskDataService.findTask(taskname);
+                if(task.getRequester().getUsername().equals(username)){
+                    task.setTaskDescription(taskDescription);
+                    if(remainTime>=1){
+                        task.setTaskTime(remainTime);
+                        task.setTaskTag(taskTag);
+                        if(maxWorkers == task.getMaxWorkers()){
+                            if (taskDataService.setTaskMessage(task)) {
+                                return new ModifyTaskRep(ModifyTaskRepCode.SUCCESS);
+                            } else {
+                                return new ModifyTaskRep(ModifyTaskRepCode.FAIL);
+                            }
+                        }else if(maxWorkers > task.getMaxWorkers()){
+                            int needPoints = (maxWorkers-task.getMaxWorkers())*task.getCredits();
+                            if(requester.getPoints()>=needPoints){
+                                task.setMaxWorkers(maxWorkers);
+                                if (taskDataService.setTaskMessage(task)) {
+                                    if(userDataService.modifyPoints(-needPoints,username)){
+                                        return new ModifyTaskRep(ModifyTaskRepCode.SUCCESS);
+                                    }else {
+                                        return new ModifyTaskRep(ModifyTaskRepCode.POINTSERROR);
+                                    }
+                                } else {
+                                    return new ModifyTaskRep(ModifyTaskRepCode.FAIL);
+                                }
+                            }else {
+                                return new ModifyTaskRep(ModifyTaskRepCode.NOPOINTS);
+                            }
+                        }else {
+                            return new ModifyTaskRep(ModifyTaskRepCode.WRONGMAXWORKER);
+                        }
+                    }else {
+                        return new ModifyTaskRep(ModifyTaskRepCode.WRONGTIME);
+                    }
+                }else {
+                    return new ModifyTaskRep(ModifyTaskRepCode.NORIGHT);
                 }
             } else {
                 return new ModifyTaskRep(ModifyTaskRepCode.NOTASK);
@@ -151,14 +182,18 @@ public class TaskServiceImpl implements TaskService {
             Task task = taskDataService.findTask(taskname);
             if (task != null) {
                 if (!taskDataService.hasReceiptTask(taskname, username)) {
-                    if (task.getMaxWorkers() >= task.getRecentWorkers()) {
-                        if (userDataService.addWorkerTask(username, task)) {
-                            return new ReceiptTaskRep(ReceiptTaskRepCode.SUCCESS);
+                    if(task.getTaskTime()>0){
+                        if (task.getMaxWorkers() > task.getRecentWorkers()) {
+                            if (userDataService.addWorkerTask(username, task)) {
+                                return new ReceiptTaskRep(ReceiptTaskRepCode.SUCCESS);
+                            } else {
+                                return new ReceiptTaskRep(ReceiptTaskRepCode.FAIL);
+                            }
                         } else {
-                            return new ReceiptTaskRep(ReceiptTaskRepCode.FAIL);
+                            return new ReceiptTaskRep(ReceiptTaskRepCode.FULL);
                         }
-                    } else {
-                        return new ReceiptTaskRep(ReceiptTaskRepCode.FULL);
+                    }else {
+                        return new ReceiptTaskRep(ReceiptTaskRepCode.END);
                     }
                 } else {
                     return  new ReceiptTaskRep(ReceiptTaskRepCode.HASRECEIPT);

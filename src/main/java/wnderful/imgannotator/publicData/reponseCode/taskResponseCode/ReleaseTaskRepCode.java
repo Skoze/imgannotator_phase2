@@ -7,8 +7,9 @@ public enum ReleaseTaskRepCode {
     FAIL(1,"发布任务失败"),
     NOTFOUND(2,"无此发布者"),
     REPEAT(3,"任务名重复"),
-    NOIMG(4,"未创建图片集"),
-    NOPOINT(5,"积分不足");
+    NOIMG(4,"图片集中未有图片"),
+    WRONGDATA(5,"最大工人数至少为1，积分数至少为0，时间至少为1"),
+    NOPOINT(6,"积分不足");
 
 
     private int code;

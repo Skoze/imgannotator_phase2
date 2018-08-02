@@ -10,10 +10,14 @@ public class PictureDaoService {
     }
 
     public boolean addTaskFolder(String taskname){
-        return fileHelper.newFolder(taskname);
+        return fileHelper.newFolder("picture/"+taskname);
     }
 
     public boolean addPicture(String taskname,String imgID, byte[] bytes){
         return fileHelper.writeFile(taskname+"/"+ imgID,bytes);
+    }
+
+    public boolean deleteAll(){
+        return fileHelper.deleteAll("picture");
     }
 }

@@ -23,14 +23,14 @@ public class UserDataServiceImpl implements UserDataService {
     //新建用户
     @Override
     public boolean newUser(User user) {
-        boolean success = false;
         UserData userData = new UserData(user.getUsername(),user.getPassword(),user.getEmail(),user.getRole(),1000);
         if(user.getRole().equals("worker")){
-            success = workerDaoService.addWorker(userData);
+            return workerDaoService.addWorker(userData);
         }else if(user.getRole().equals("requester")){
-            success = requesterDaoService.addRequester(userData);
+            return requesterDaoService.addRequester(userData);
+        }else {
+            return false;
         }
-        return success;
     }
 
     //修改工人用户信息
@@ -74,7 +74,7 @@ public class UserDataServiceImpl implements UserDataService {
         if(requesterExist(username)){
             UserData userData = requesterDaoService.findRequester(username);
             int newPoints = userData.getPoints() + points;
-            if(newPoints<=0){
+            if(newPoints<0){
                 return false;
             }else {
                 userData.setPoints(newPoints);
@@ -83,7 +83,7 @@ public class UserDataServiceImpl implements UserDataService {
         }else if(workerExist(username)){
             UserData userData = workerDaoService.findWorker(username);
             int newPoints = userData.getPoints() + points;
-            if(newPoints<=0){
+            if(newPoints<0){
                 return false;
             }else {
                 userData.setPoints(newPoints);

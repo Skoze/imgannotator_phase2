@@ -78,4 +78,8 @@ public class ProcessDaoService {
         }
         return false;
     }
+
+    public boolean deleteAll(){
+        return fileHelper.deleteAll("data/process");
+    }
 }

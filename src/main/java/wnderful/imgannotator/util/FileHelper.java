@@ -77,21 +77,38 @@ public class FileHelper {
     }
 
     public boolean newFolder(String path){
-        File file = new File("src/main/resources/static/picture/" + path);
+        File file = new File("src/main/resources/static/" + path);
         return file.mkdir();
     }
 
-    public String delete(String name) {
+    public boolean delete(String path) {
         try {
-            File file = new File("src/main/resources/static/data/" + name + ".txt");
-            if(file.delete()){
-                return "done";
-            }else {
-                return "not exist";
-            }
+            File file = new File("src/main/resources/static/" + path);
+            return file.delete();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return "fail";
+        return false;
+    }
+
+    public boolean deleteAll(String path){
+        try {
+            File dir = new File("src/main/resources/static/" + path);
+            if (dir.isDirectory()) {
+                String[] children = dir.list();
+
+                for (String aChildren : children) {
+                    boolean success = deleteAll(path + "/" + aChildren);
+                    if (!success) {
+                        return false;
+                    }
+                }
+            }
+                return dir.delete();
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 }

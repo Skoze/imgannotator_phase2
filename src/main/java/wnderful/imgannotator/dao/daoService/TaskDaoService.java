@@ -60,4 +60,8 @@ public class TaskDaoService {
     public boolean deleteTask(String taskname) {
         return true;
     }
+    public boolean deleteAll(){
+        return fileHelper.deleteAll("data/task");
+    }
+
 }

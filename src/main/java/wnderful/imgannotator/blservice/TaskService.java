@@ -3,7 +3,7 @@ package wnderful.imgannotator.blservice;
 import wnderful.imgannotator.publicData.response.Response;
 
 public interface TaskService {
-    Response releaseTask(String username, String taskname, String taskDescription, int numberOfImages, int taskTime, String[] taskTag, int credits, int maxWorkers);
+    Response releaseTask(String username, String taskname, String taskDescription, int taskTime, String[] taskTag, int credits, int maxWorkers);
 
     Response displayReleasedTask(String username);
 

@@ -13,8 +13,8 @@ public class TaskController {
 
     @RequestMapping(value = "/requester/add/{username}", method = RequestMethod.POST)
     public Response releaseTask(@PathVariable("username") String username, @RequestBody ReleaseTaskRequest request) {
-        return taskService.releaseTask(username, request.getTaskname(), request.getTaskDescription(),
-                0, request.getTaskTime(), request.getTaskTag(), request.getCredits(), request.getMaxWorkers());
+        return taskService.releaseTask(username, request.getTaskname(), request.getTaskDescription()
+                , request.getTaskTime(), request.getTaskTag(), request.getCredits(), request.getMaxWorkers());
     }
 
     @RequestMapping(value = "/requester/display/releasedTask/{username}", method = RequestMethod.GET)

@@ -36,4 +36,8 @@ public class RequesterDaoService {
     public boolean deleteRequester(String requestername){
         return true;
     }
+    public boolean deleteAll(){
+        return fileHelper.deleteAll("data/user/requester");
+    }
+
 }

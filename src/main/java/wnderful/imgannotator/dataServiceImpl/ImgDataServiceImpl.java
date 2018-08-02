@@ -23,8 +23,7 @@ public class ImgDataServiceImpl implements ImgDataService {
         ArrayList<ImgData> imgDataArrayList = imgDaoService.selectByTask(taskname);
         ArrayList<String> imgnames = workDaoService.selectImgByWorker(workername);
 
-
-        if(imgDataArrayList!=null){
+        if(imgDataArrayList!=null&&imgDataArrayList.size()>0){
             if(imgnames ==null||imgnames.size()==0){
                 return imgDataArrayList.get(0).getImgURL();
             }else {
@@ -35,21 +34,26 @@ public class ImgDataServiceImpl implements ImgDataService {
                         }
                     }
                 }
+                return null;
             }
+        }else {
+            return null;
         }
-        return null;
     }
 
-    //返回任务的封面图（第一张图片）
+    //返回任务的封面图URL（第一张图片）
     @Override
     public String findFirstImgURL(String taskname) {
         ArrayList<ImgData> imgData = imgDaoService.selectByTask(taskname);
         if(imgData!=null){
             if(imgData.size()>0){
                 return imgData.get(0).getImgURL();
+            }else {
+                return null;
             }
+        }else {
+            return null;
         }
-        return null;
     }
 
     @Override
@@ -66,8 +70,9 @@ public class ImgDataServiceImpl implements ImgDataService {
         ImgData imgData = new ImgData(imgname,imgID,imgURL,taskname);
         if(imgDaoService.addImg(imgData)){
             return pictureDaoService.addPicture(taskname,imgID,bytes);
+        }else {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -88,10 +93,15 @@ public class ImgDataServiceImpl implements ImgDataService {
         if(workDaoService.addWork(workData)){
             String processname = taskname+"_"+ workername;
             ProcessData processData = processDaoService.findProcess(processname);
-            processData.setProcess(processData.getProcess()+1);
-            return processDaoService.setProcess(processData);
+            if(processData!=null){
+                processData.setProcess(processData.getProcess()+1);
+                return processDaoService.setProcess(processData);
+            }else {
+                return false;
+            }
+        }else {
+            return false;
         }
-        return false;
     }
 
     @Override

@@ -68,4 +68,8 @@ public class WorkDaoService {
     public boolean deleteWork(String  workname){
         return true;
     }
+
+    public boolean deleteAll(){
+        return fileHelper.deleteAll("data/work");
+    }
 }

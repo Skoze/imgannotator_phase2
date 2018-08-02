@@ -37,4 +37,8 @@ public class WorkerDaoService {
         return false;
     }
 
+    public boolean deleteAll(){
+        return fileHelper.deleteAll("data/user/worker");
+    }
+
 }

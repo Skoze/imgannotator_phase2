@@ -21,6 +21,7 @@ import wnderful.imgannotator.util.jwt.*;
 import wnderful.imgannotator.vo.baseVo.WorkerVo;
 import wnderful.imgannotator.vo.taskVo.DisplayTaskVo;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class BaseServiceImpl implements BaseService {
@@ -29,38 +30,54 @@ public class BaseServiceImpl implements BaseService {
     private JwtHelper jwtHelper = new JwtHelper();
     private CreateVoHelper createVoHelper = new CreateVoHelper();
 
+    //登陆
     @Override
-    public LoginRep login(String username, String password) {
-        if (userDataService.userExist(username)) {
-            User user = userDataService.findUser(username);
-            if (user.getPassword().equals(password)) {
-                try {
-                    String token = jwtHelper.createToken(username);
-                    LoginVo vo = new LoginVo(token, user.getRole());
-                    return new LoginRep(LoginRepCode.SUCCESS, vo);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    return new LoginRep(LoginRepCode.FAIL);
+    public LoginRep login(String username, String password) throws UnsupportedEncodingException {
+        if (!username.equals("")) {
+            if (userDataService.userExist(username)) {
+                if (!password.equals("")) {
+                    User user = userDataService.findUser(username);
+                    if (user.getPassword().equals(password)) {
+                        String token = jwtHelper.createToken(username);
+                        LoginVo vo = new LoginVo(token, user.getRole());
+                        return new LoginRep(LoginRepCode.SUCCESS, vo);
+                    } else {
+                        return new LoginRep(LoginRepCode.WRONGPASSWORD);
+                    }
+                } else {
+                    return new LoginRep(LoginRepCode.EMPTYPASSWORD);
                 }
             } else {
-                return new LoginRep(LoginRepCode.WRONGPASSWORD);
+                return new LoginRep(LoginRepCode.NOTEXIST);
             }
         } else {
-            return new LoginRep(LoginRepCode.NOTEXIST);
+            return new LoginRep(LoginRepCode.EMPTYNAME);
         }
     }
 
+    //注册
     @Override
     public SignUpRep signUp(String username, String password, String email, String role) {
         if (!userDataService.userExist(username)) {
-            User user = new User(username, password, email, role);
-            if (userDataService.newUser(user)) {
-                return new SignUpRep(SignUpRepCode.SUCCESS);
-            }else {
-                return new SignUpRep(SignUpRepCode.FAIL);
+            if (!username.equals("")) {
+                if (!password.equals("")) {
+                    if (!email.equals("")) {
+                        User user = new User(username, password, email, role);
+                        if (userDataService.newUser(user)) {
+                            return new SignUpRep(SignUpRepCode.SUCCESS);
+                        } else {
+                            return new SignUpRep(SignUpRepCode.FAIL);
+                        }
+                    }
+                    return new SignUpRep(SignUpRepCode.EMPTYEMAIL);
+                } else {
+                    return new SignUpRep(SignUpRepCode.EMPTYPASSWORD);
+                }
+            } else {
+                return new SignUpRep(SignUpRepCode.EMPTYNAME);
             }
         } else {
-            return  new SignUpRep(SignUpRepCode.NAMEREPEAT);
+            return new SignUpRep(SignUpRepCode.NAMEREPEAT);
         }
     }
 
@@ -74,10 +91,10 @@ public class BaseServiceImpl implements BaseService {
                     WorkerVo[] workerVos = createVoHelper.createWorkerVo(workers, taskName);
                     DisplayDetailVo vo = createVoHelper.createDisplayDetailVo(task, workerVos);
                     return new DisplayDetailRep(DisplayDetailRepCode.SUCCESS, vo);
-                }else {
+                } else {
                     return new DisplayDetailRep(DisplayDetailRepCode.FAIL);
                 }
-            }else {
+            } else {
                 return new DisplayDetailRep(DisplayDetailRepCode.NOTASK);
             }
         } else {
@@ -87,11 +104,11 @@ public class BaseServiceImpl implements BaseService {
 
     @Override
     public DisplayAllTaskRep displayAllTask() {
-        ArrayList<Task>  tasks = taskDataService.findAllTask();
-        if(tasks!=null){
+        ArrayList<Task> tasks = taskDataService.findAllTask();
+        if (tasks != null) {
             DisplayTaskVo vo = createVoHelper.createDisplayTaskVo(tasks);
             return new DisplayAllTaskRep(DisplayAllTaskRepCode.SUCCESS, vo);
-        }else {
+        } else {
             return new DisplayAllTaskRep(DisplayAllTaskRepCode.FAIL);
         }
     }

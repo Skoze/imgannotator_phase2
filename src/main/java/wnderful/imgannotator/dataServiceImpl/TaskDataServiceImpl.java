@@ -151,8 +151,8 @@ public class TaskDataServiceImpl implements TaskDataService {
     @Override
     public ArrayList<Task> findReleaseTasks(String requestername) {
         ArrayList<TaskData> taskData = taskDaoService.selectByRequester(requestername);
-        ArrayList<Task> tasks = entityHelper.dataToTasks(taskData);
-        if (tasks != null) {
+        if (taskData != null&&taskData.size()>0) {
+            ArrayList<Task> tasks = entityHelper.dataToTasks(taskData);
             for(Task task:tasks){
                 task.setRecentWorkers(findTaskProcess(task.getTaskname()));
             }

@@ -7,7 +7,8 @@ public enum ReceiptTaskRepCode {
     NOTFOUND(2,"无此工人"),
     NOTASK(3,"无此任务"),
     FULL(4,"任务已满额"),
-    HASRECEIPT(5,"任务已接受");
+    HASRECEIPT(5,"任务已接受"),
+    END(6,"任务已结束");
 
     private int code;
     private String message;

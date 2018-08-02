@@ -17,35 +17,40 @@ public class ImgServiceImpl implements ImgService {
     private UserDataServiceImpl userDataService = new UserDataServiceImpl();
 
     @Override
-    public Response uploadImg(byte[] bytes, String imgID,String taskname) {
-        if(imgDataService.packageExist(taskname)){
-            if(!imgDataService.imgExist(taskname,imgID)){
-                if(imgDataService.uploadImg(taskname,imgID,bytes)){
+    public Response uploadImg(byte[] bytes, String imgID, String taskname) {
+        if (imgDataService.packageExist(taskname)) {
+            if (!imgDataService.imgExist(taskname, imgID)) {
+                if (imgDataService.uploadImg(taskname, imgID, bytes)) {
                     return new UploadRep(UploadRepCode.SUCCESS);
-                }else {
+                } else {
                     return new UploadRep(UploadRepCode.FAIL);
                 }
-            }else {
+            } else {
                 return new UploadRep(UploadRepCode.REPEAT);
             }
-        }else {
+        } else {
             return new UploadRep(UploadRepCode.NOFOLDER);
         }
     }
 
+    //创建图片文件夹
     @Override
     public CreatePackageRep createPackage(String username, String taskname) {
-        if(userDataService.requesterExist(username)){
-            if(!imgDataService.packageExist(taskname)){
-                if(imgDataService.createfolder(taskname)){
-                    return new CreatePackageRep(CreatePackageRepCode.SUCCESS);
-                }else {
-                    return new CreatePackageRep(CreatePackageRepCode.FAIL);
+        if (userDataService.requesterExist(username)) {
+            if  (taskname!=null&&(!taskname.equals(""))) {
+                if (!imgDataService.packageExist(taskname)) {
+                    if (imgDataService.createfolder(taskname)) {
+                        return new CreatePackageRep(CreatePackageRepCode.SUCCESS);
+                    } else {
+                        return new CreatePackageRep(CreatePackageRepCode.FAIL);
+                    }
+                } else {
+                    return new CreatePackageRep(CreatePackageRepCode.REPEAT);
                 }
-            }else {
-                return new CreatePackageRep(CreatePackageRepCode.REPEAT);
+            } else {
+                return new CreatePackageRep(CreatePackageRepCode.EMPTYTASKNAME);
             }
-        }else {
+        } else {
             return new CreatePackageRep(CreatePackageRepCode.NOTFOUND);
         }
     }

@@ -10,6 +10,7 @@ public class ImgUrlVo {
         this.imgURL = imgURL;
     }
 
+
     public String getImgURL() {
         return imgURL;
     }

@@ -55,4 +55,8 @@ public class MarksDaoService {
     public boolean deleteMarks(String marksName){
         return true;
     }
+
+    public boolean deleteAll(){
+        return fileHelper.deleteAll("data/mark");
+    }
 }

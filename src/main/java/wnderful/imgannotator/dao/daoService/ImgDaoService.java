@@ -51,4 +51,8 @@ public class ImgDaoService {
     public boolean deleteImg(String  imgname){
         return true;
     }
+
+    public boolean deleteAll(){
+        return fileHelper.deleteAll("data/img");
+    }
 }
