@@ -8,6 +8,8 @@ public interface MarkService {
 
     Response findURL(String username, String taskname);
 
+    Response getURLs(String username,String taskname);
+
     Response findMark(String taskname,String imgID,String username);
 
     Response getMark(String taskname,String imgID,String username);

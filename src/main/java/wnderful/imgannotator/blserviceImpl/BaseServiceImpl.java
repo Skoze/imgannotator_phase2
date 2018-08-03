@@ -105,11 +105,11 @@ public class BaseServiceImpl implements BaseService {
     @Override
     public DisplayAllTaskRep displayAllTask() {
         ArrayList<Task> tasks = taskDataService.findAllTask();
-        if (tasks != null) {
+        if (tasks != null&&tasks.size()>0) {
             DisplayTaskVo vo = createVoHelper.createDisplayTaskVo(tasks);
             return new DisplayAllTaskRep(DisplayAllTaskRepCode.SUCCESS, vo);
         } else {
-            return new DisplayAllTaskRep(DisplayAllTaskRepCode.FAIL);
+            return new DisplayAllTaskRep(DisplayAllTaskRepCode.SUCCESS);
         }
     }
 }

@@ -10,16 +10,15 @@ import java.util.ArrayList;
 public class EntityHelper {
     private UserDataServiceImpl userDataService = new UserDataServiceImpl();
 
-    private Task dataToTask(TaskData taskData,Requester requester){
+    private Task dataToTask(TaskData taskData, Requester requester) {
 
         return new Task(taskData.getTaskname(), requester, taskData.getTaskDescription(), taskData.getImgURL(),
                 taskData.getReleasedTime(), taskData.getTaskTime(), taskData.getTaskTag(), taskData.getCredits(), taskData.getMaxWorkers());
     }
 
-    public ArrayList<Task> dataToTasks(ArrayList<TaskData> taskData){
+    public ArrayList<Task> dataToTasks(ArrayList<TaskData> taskData) {
         ArrayList<Task> tasks = new ArrayList<>();
-
-        if (taskData != null) {
+        if(taskData.size()>0) {
             String requestername = taskData.get(0).getRequestername();
             for (TaskData aTaskData : taskData) {
                 Requester requester = userDataService.findRequester(requestername);
@@ -28,9 +27,8 @@ public class EntityHelper {
                     tasks.add(task);
                 }
             }
-            return tasks;
-        } else {
-            return null;
         }
+        return tasks;
+
     }
 }

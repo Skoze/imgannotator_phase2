@@ -27,12 +27,14 @@ public class ImgDataServiceImpl implements ImgDataService {
             if(imgnames ==null||imgnames.size()==0){
                 return imgDataArrayList.get(0).getImgURL();
             }else {
+                loop1:
                 for(ImgData imgData:imgDataArrayList){
                     for(String imgName:imgnames){
-                        if(!imgData.getImgname().equals(imgName)){
-                            return imgData.getImgURL();
+                        if(imgData.getImgname().equals(imgName)){
+                            continue loop1;
                         }
                     }
+                    return imgData.getImgURL();
                 }
                 return null;
             }
@@ -51,6 +53,21 @@ public class ImgDataServiceImpl implements ImgDataService {
             }else {
                 return null;
             }
+        }else {
+            return null;
+        }
+    }
+
+    //返回任务图片全部URL
+    @Override
+    public String[] findImgURLs(String taskname) {
+        ArrayList<ImgData> imgData =imgDaoService.selectByTask(taskname);
+        if(imgData!=null&&imgData.size()>0){
+            String[] URLs = new String[imgData.size()];
+            for(int i = 0;i < imgData.size();i++){
+                URLs[i] = imgData.get(i).getImgURL();
+            }
+            return URLs;
         }else {
             return null;
         }

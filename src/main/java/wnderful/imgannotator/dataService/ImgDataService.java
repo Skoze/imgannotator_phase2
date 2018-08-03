@@ -4,7 +4,9 @@ public interface ImgDataService {
 
     String findAImgURL(String taskname,String workername);
 
-    String  findFirstImgURL(String taskname);
+    String findFirstImgURL(String taskname);
+
+    String[] findImgURLs(String taskname);
 
     boolean imgExist(String taskname,String imgID);
 

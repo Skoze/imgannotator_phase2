@@ -1,17 +1,16 @@
 package wnderful.imgannotator.publicData.reponseCode.markResponseCode;
 
-public enum FindMarkRepCode {
-    SUCCESS(0,"查找图片标记成功"),
-    FAIL(1,"查找图片标记失败"),
-    NOTFOUND(2,"未找到发起者"),
-    NOTALLOW(3,"无查看权限"),
-    NOIMG(4,"图片不存在"),
-    NOTASK(5,"任务不存在");
+public enum  GetURLsRepCode {
+    SUCCESS(0,"获取图片成功"),
+    FAIL(1,"获取图片失败"),
+    NOTFOUND(2,"无此发布者"),
+    NOTASK(3,"未找到该任务"),
+    NOALLOW(4,"无查看权限");
 
     private int code;
     private String message;
 
-    FindMarkRepCode(int code, String message) {
+    GetURLsRepCode(int code, String message) {
         this.code = code;
         this.message = message;
     }

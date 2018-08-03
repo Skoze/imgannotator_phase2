@@ -1,4 +1,4 @@
-package wnderful.imgannotator.TaskServiceTests;
+package wnderful.imgannotator.taskServiceTests;
 
 import com.alibaba.fastjson.JSON;
 import org.junit.BeforeClass;

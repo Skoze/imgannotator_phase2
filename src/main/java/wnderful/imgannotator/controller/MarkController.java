@@ -2,6 +2,7 @@ package wnderful.imgannotator.controller;
 
 import org.springframework.web.bind.annotation.*;
 import wnderful.imgannotator.blserviceImpl.MarkServiceImpl;
+import wnderful.imgannotator.publicData.response.MarkResponse.GetURLsRep;
 import wnderful.imgannotator.publicData.response.Response;
 import wnderful.imgannotator.request.mark.*;
 
@@ -19,6 +20,10 @@ public class MarkController {
     @RequestMapping(value = "/findURL/{username}", method = RequestMethod.POST)
     public Response findURL(@PathVariable("username") String username,@RequestBody GetURLRequest request) {
         return markService.findURL(username,request.getTaskname());
+    }
+    @RequestMapping(value = "/getURLs/{username}", method = RequestMethod.POST)
+    public Response getURLs(@PathVariable("username") String username, @RequestBody GetURLsRequest request) {
+        return markService.getURLs(username,request.getTaskname());
     }
 
     @RequestMapping(value = "/findMark/{username}",method = RequestMethod.POST)

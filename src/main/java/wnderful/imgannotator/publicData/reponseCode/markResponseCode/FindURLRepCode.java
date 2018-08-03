@@ -6,7 +6,8 @@ public enum FindURLRepCode {
     COMPLETE(2,"任务已完成"),
     NOTFOUND(3,"无此工人"),
     NOTASK(4,"任务未接受"),
-    END(5,"任务已结束");
+    END(5,"任务已结束"),
+    NOTEXIST(6,"任务不存在");
 
 
     private int code;

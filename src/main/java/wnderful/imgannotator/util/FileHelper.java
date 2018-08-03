@@ -97,10 +97,12 @@ public class FileHelper {
             if (dir.isDirectory()) {
                 String[] children = dir.list();
 
-                for (String aChildren : children) {
-                    boolean success = deleteAll(path + "/" + aChildren);
-                    if (!success) {
-                        return false;
+                if(children!=null){
+                    for (String aChildren : children) {
+                        boolean success = deleteAll(path + "/" + aChildren);
+                        if (!success) {
+                            return false;
+                        }
                     }
                 }
             }

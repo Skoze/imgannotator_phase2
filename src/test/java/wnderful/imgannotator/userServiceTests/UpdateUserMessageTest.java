@@ -1,4 +1,4 @@
-package wnderful.imgannotator.UserServiceTests;
+package wnderful.imgannotator.userServiceTests;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -13,7 +13,7 @@ import wnderful.imgannotator.dataServiceImpl.NormalDataServiceImpl;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @WebAppConfiguration
-public class LostPointsTest {
+public class UpdateUserMessageTest {
     private BaseServiceImpl baseService = new BaseServiceImpl();
     private UserServiceImpl userService = new UserServiceImpl();
 

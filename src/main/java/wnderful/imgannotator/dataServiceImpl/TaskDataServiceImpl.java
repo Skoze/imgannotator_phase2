@@ -10,6 +10,7 @@ import wnderful.imgannotator.entity.user.Requester;
 import wnderful.imgannotator.util.EntityHelper;
 
 import java.util.ArrayList;
+import java.util.*;
 
 public class TaskDataServiceImpl implements TaskDataService {
     private UserDataServiceImpl userDataService = new UserDataServiceImpl();
@@ -87,8 +88,10 @@ public class TaskDataServiceImpl implements TaskDataService {
     //上传任务信息
     @Override
     public boolean uploadTask(Task task) {
+        Calendar calendar = Calendar.getInstance();
+        String time = calendar.get(Calendar.YEAR)+"_"+calendar.get(Calendar.MONTH)+"_"+calendar.get(Calendar.DATE);
         TaskData taskData = new TaskData(task.getTaskname(), task.getRequester().getUsername(), task.getTaskDescription(),
-                task.getImgsURL(), "20180801", task.getTaskTime(), task.getTaskTag(), task.getCredits(), task.getMaxWorkers());
+                task.getImgsURL(), time, task.getTaskTime(), task.getTaskTag(), task.getCredits(), task.getMaxWorkers());
         return taskDaoService.addTask(taskData);
     }
 
@@ -120,10 +123,15 @@ public class TaskDataServiceImpl implements TaskDataService {
     }
 
     //判断任务是否已经结束
+    //调用此方法前必须判断任务是否存在
     @Override
     public boolean isEnd(String taskname) {
         TaskData taskData = taskDaoService.findTask(taskname);
-        return taskData.getTaskTime() == 0;
+        if(taskData!=null){
+            return taskData.getTaskTime() == 0;
+        }else {
+            return true;
+        }
     }
 
     //判断工人是否已经完成任务
@@ -172,7 +180,7 @@ public class TaskDataServiceImpl implements TaskDataService {
         ArrayList<TaskData> taskDataArrayList = new ArrayList<>();
         ArrayList<ProcessData> processDataArrayList = processDaoService.selectByWorker(workername);
 
-        if (processDataArrayList != null) {
+        if (processDataArrayList != null&&processDataArrayList.size()>0) {
             for (ProcessData processData : processDataArrayList) {
                 String taskname = processData.getTaskname();
                 TaskData taskData = taskDaoService.findTask(taskname);
@@ -190,30 +198,22 @@ public class TaskDataServiceImpl implements TaskDataService {
             }
         }
         return null;
-
-        //Task task = new Task("taskname", "imgURL", 1, null, 10, 10);
-        //ArrayList<Task> tasks = new ArrayList<Task>();
-        //tasks.add(task);
-        //return tasks;
     }
 
     @Override
     public ArrayList<Task> findAllTask() {
         ArrayList<TaskData> taskData = taskDaoService.selectAll();
-        if(taskData != null){
+        if(taskData != null&&taskData.size()>0){
             ArrayList<Task> tasks = entityHelper.dataToTasks(taskData);
             if (tasks != null) {
                 for(Task task:tasks){
                     task.setRecentWorkers(findTaskProcess(task.getTaskname()));
                 }
-                return tasks;
             }
+            return tasks;
+        }else {
+            return null;
         }
-        return null;
-        //Task task = new Task("taskname", "imgURL", 1, null, 10, 10);
-        //ArrayList<Task> tasks = new ArrayList<Task>();
-        //tasks.add(task);
-        //return tasks;
     }
 }
 

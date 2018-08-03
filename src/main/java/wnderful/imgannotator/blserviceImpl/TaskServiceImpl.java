@@ -68,7 +68,7 @@ public class TaskServiceImpl implements TaskService {
                     return new DisplayReleasedTaskRep(DisplayReleasedTaskRepCode.FAIL);
                 }
             } else {
-                return new DisplayReleasedTaskRep(DisplayReleasedTaskRepCode.NOTASK);
+                return new DisplayReleasedTaskRep(DisplayReleasedTaskRepCode.SUCCESS);
             }
         } else {
             return new DisplayReleasedTaskRep(DisplayReleasedTaskRepCode.NOTFOUND);
@@ -79,7 +79,7 @@ public class TaskServiceImpl implements TaskService {
     public DisplayReceiptTaskRep displayReceiptTask(String username) {
         if (userDataService.workerExist(username)) {
             ArrayList<Task> tasks = taskDataService.findReceiptTasks(username);
-            if (tasks != null) {
+            if (tasks != null&&tasks.size()>0) {
                 DisplayTaskVo vo = helper.createDisplayTaskVo(tasks);
                 if (vo != null) {
                     return new DisplayReceiptTaskRep(DisplayReceiptTaskRepCode.SUCCESS, vo);
@@ -87,7 +87,7 @@ public class TaskServiceImpl implements TaskService {
                     return new DisplayReceiptTaskRep(DisplayReceiptTaskRepCode.FAIL);
                 }
             } else {
-                return new DisplayReceiptTaskRep(DisplayReceiptTaskRepCode.NOTASK);
+                return new DisplayReceiptTaskRep(DisplayReceiptTaskRepCode.SUCCESS);
             }
         } else {
             return new DisplayReceiptTaskRep(DisplayReceiptTaskRepCode.NOTFOUND);
