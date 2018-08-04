@@ -1,7 +1,6 @@
 package wnderful.imgannotator.userServiceTests;
 
 import com.alibaba.fastjson.JSON;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,9 +10,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import wnderful.imgannotator.blserviceImpl.BaseServiceImpl;
 import wnderful.imgannotator.blserviceImpl.UserServiceImpl;
 import wnderful.imgannotator.dataServiceImpl.NormalDataServiceImpl;
-import wnderful.imgannotator.publicData.reponseCode.userResponseCode.AddPointsRepCode;
 import wnderful.imgannotator.publicData.reponseCode.userResponseCode.LostPointsRepCode;
-import wnderful.imgannotator.publicData.response.userResponse.AddPointsRep;
 import wnderful.imgannotator.publicData.response.userResponse.LostPointsRep;
 
 import static org.junit.Assert.assertEquals;

@@ -5,7 +5,8 @@ public enum UpdateUserMessageRepCode {
     FAIL(1,"更新用户信息失败"),
     NOTFOUND(2,"该用户不存在"),
     REPEAT(3,"密码重复"),
-    WRONG(4,"原密码错误");
+    WRONGPASSWORD(4,"原密码错误"),
+    WRONGDATA(5,"错误数据格式");
 
 
     private int code;

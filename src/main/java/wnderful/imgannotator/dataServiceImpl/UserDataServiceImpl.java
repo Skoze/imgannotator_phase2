@@ -36,22 +36,26 @@ public class UserDataServiceImpl implements UserDataService {
     //修改工人用户信息
     @Override
     public boolean setWorkerMessage(User worker) {
-        boolean success;
         UserData userData = workerDaoService.findWorker(worker.getUsername());
-        userData.setEmail(worker.getEmail());
-        userData.setPassword(worker.getPassword());
-        success = workerDaoService.setWorker(userData);
-        return success;
+        if(userData!=null){
+            userData.setEmail(worker.getEmail());
+            userData.setPassword(worker.getPassword());
+            return workerDaoService.setWorker(userData);
+        }else {
+            return false;
+        }
     }
 
     @Override
     public boolean setRequesterMessage(User requester) {
-        boolean success;
         UserData userData = requesterDaoService.findRequester(requester.getUsername());
-        userData.setEmail(requester.getEmail());
-        userData.setPassword(requester.getPassword());
-        success = requesterDaoService.setRequester(userData);
-        return success;
+        if(userData!=null){
+            userData.setEmail(requester.getEmail());
+            userData.setPassword(requester.getPassword());
+            return requesterDaoService.setRequester(userData);
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -101,10 +105,10 @@ public class UserDataServiceImpl implements UserDataService {
             int restPoints = totalPoints;
             for(ProcessData processData:processDataArrayList){
                 UserData workerData = workerDaoService.findWorker(processData.getWorkername());
-                int getPoints = processData.getProcess()/processData.getImgsNum()*point;
-                workerData.setPoints(workerData.getPoints()+getPoints);
+                double getPoints = point*processData.getProcess()/processData.getImgsNum();
+                workerData.setPoints(workerData.getPoints()+(int)getPoints);
                 if(workerDaoService.setWorker(workerData)){
-                    restPoints = restPoints - getPoints;
+                    restPoints = restPoints - (int)getPoints;
                 }else {
                     break;
                 }
@@ -124,7 +128,6 @@ public class UserDataServiceImpl implements UserDataService {
             UserData userData = workerDaoService.findWorker(username);
             return new User(userData.getUsername(),userData.getPassword(),userData.getEmail(),userData.getRole());
         }else {
-            System.out.println("Null");
             return null;
         }
     }

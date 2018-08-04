@@ -28,6 +28,8 @@ public class UserServiceImpl implements UserService {
                     RequesterMessageVo vo = new RequesterMessageVo(requester.getUsername(), requester.getEmail(),
                             requester.getPoints(), requester.getReleasedTasks());
                     return new GetUserMassageRep(GetUserMassageRepCode.SUCCESS, vo);
+                }else {
+                    return new GetUserMassageRep(GetUserMassageRepCode.FAIL);
                 }
             case "worker":
                 Worker worker = userDataService.findWorker(username);
@@ -35,6 +37,8 @@ public class UserServiceImpl implements UserService {
                     WorkerMessageVo vo = new WorkerMessageVo(worker.getUsername(), worker.getEmail(), worker.getPoints(),
                             worker.getCompletedTasks(), worker.getCompletedImages());
                     return new GetUserMassageRep(GetUserMassageRepCode.SUCCESS, vo);
+                }else {
+                    return new GetUserMassageRep(GetUserMassageRepCode.FAIL);
                 }
             default:
                 return new GetUserMassageRep(GetUserMassageRepCode.NOTFOUND);
@@ -47,10 +51,21 @@ public class UserServiceImpl implements UserService {
         if (userDataService.userExist(username)) {
             User user = userDataService.findUser(username);
             if (user != null) {
-                user.setEmail(newEmail);
                 if (user.getPassword().equals(oldPassword)) {
-                    if (!oldPassword.equals(newPassword)) {
-                        user.setPassword(newPassword);
+                    if((!newEmail.equals(""))||(!newPassword.equals(""))){
+                        if(!newEmail.equals("")){
+                            user.setEmail(newEmail);
+
+                        }
+
+                        if(!newPassword.equals("")){
+                            if (!oldPassword.equals(newPassword)) {
+                                user.setPassword(newPassword);
+                            } else {
+                                return new UpdateUserMessageRep(UpdateUserMessageRepCode.REPEAT);
+                            }
+                        }
+
                         switch (role) {
                             case "requester":
                                 if (userDataService.setRequesterMessage(user)) {
@@ -63,11 +78,11 @@ public class UserServiceImpl implements UserService {
                             default:
                                 return new UpdateUserMessageRep(UpdateUserMessageRepCode.FAIL);
                         }
-                    } else {
-                        return new UpdateUserMessageRep(UpdateUserMessageRepCode.REPEAT);
+                    }else {
+                        return new UpdateUserMessageRep(UpdateUserMessageRepCode.WRONGDATA);
                     }
                 } else {
-                    return new UpdateUserMessageRep(UpdateUserMessageRepCode.WRONG);
+                    return new UpdateUserMessageRep(UpdateUserMessageRepCode.WRONGPASSWORD);
                 }
             } else {
                 return new UpdateUserMessageRep(UpdateUserMessageRepCode.FAIL);
